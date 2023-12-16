@@ -1,0 +1,27 @@
+.Welcome {
+    justify-content: start;
+    position: relative;
+    text-align: center;
+}
+.Welcome .equalizers {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 0;
+    /* width: 100%; */
+    position: absolute;
+    bottom: 0;
+}
+.Welcome img{
+    height: 400px;
+    width: 100%;
+}
+.Welcome main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+    padding-top: 32px;
+}
+
