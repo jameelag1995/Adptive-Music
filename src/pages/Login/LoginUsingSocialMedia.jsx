@@ -8,7 +8,7 @@ export default function LoginUsingSocialMedia() {
                 Or login using your social media
             </span>
             <div className="social-media-icons">
-                <FaFacebookF className="sm-icon" style={{ color: "#475993" }} />
+                <FaFacebookF className="sm-icon" />
                 <FcGoogle className="sm-icon" />
             </div>
         </div>

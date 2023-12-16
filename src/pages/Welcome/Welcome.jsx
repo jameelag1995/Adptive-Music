@@ -1,6 +1,4 @@
 import { Button, Typography, useTheme } from "@mui/material";
-import MusicNoteOutlinedIcon from "@mui/icons-material/MusicNoteOutlined";
-import TuneOutlinedIcon from "@mui/icons-material/TuneOutlined";
 import Equalizer from "../../components/Equalizer/Equalizer";
 import darkLogo from "../../assets/images/applogo.png";
 import lightLogo from "../../assets/images/lightapplogo.png";
@@ -15,8 +13,6 @@ export default function Welcome() {
             ) : (
                 <img src={lightLogo} alt="app logo" />
             )}
-
-            {/* <Typography variant="h3">Welcome To Adaptive Music</Typography> */}
             <main>
                 <Typography variant="h5" color="primary">
                     Listen to your favorite music the way you like it!

@@ -3,6 +3,18 @@ import { useNavigate } from "react-router-dom";
 import { CiMail } from "react-icons/ci";
 import { RiLockPasswordLine } from "react-icons/ri";
 import LoginUsingSocialMedia from "./LoginUsingSocialMedia";
+import {
+    Button,
+    FormControl,
+    IconButton,
+    InputAdornment,
+    InputLabel,
+    OutlinedInput,
+    Typography,
+} from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useAuth } from "../../context/AuthContext";
+import BasicModal from "../../components/BasicModal/BasicModal";
 function emailValidation(mailInput, setRegisterError) {
     const re = new RegExp(
         /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -16,19 +28,19 @@ function emailValidation(mailInput, setRegisterError) {
     return true;
 }
 
-function emailExists(mailInput, data) {
-    // console.log(data);
-    const emailsArr = data.map((user) => user.email);
-    // console.log("emails Arr", emailsArr);
-    const alreadyExists = emailsArr.includes(mailInput);
-    // console.log("email already exists", alreadyExists);
-    if (alreadyExists) {
-        // setRegisterError("Email already Exists");
-        return false;
-    }
-    // setRegisterError("email does not exist");
-    return true;
-}
+// function emailExists(mailInput, data) {
+//     // console.log(data);
+//     const emailsArr = data.map((user) => user.email);
+//     // console.log("emails Arr", emailsArr);
+//     const alreadyExists = emailsArr.includes(mailInput);
+//     // console.log("email already exists", alreadyExists);
+//     if (alreadyExists) {
+//         // setRegisterError("Email already Exists");
+//         return false;
+//     }
+//     // setRegisterError("email does not exist");
+//     return true;
+// }
 function passwordValidation(passInput, setRegisterError) {
     const re = new RegExp(
         "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
@@ -53,43 +65,20 @@ function passwordConfirmation(mainPass, confirmPass, setRegisterError) {
 
 export default function Register() {
     const [showPassword, setShowPassword] = useState(false);
-    const url = "https://6566fd1464fcff8d730f82fe.mockapi.io/users";
-    const [usersData, setUsersData] = useState([]);
-    const [newUser, setNewUser] = useState({
-        name: "",
-        email: "",
-        password: "",
-        dateOfBirth: "",
-        phoneNum: "",
-        address: "",
-        img: "",
-    });
     const emailInput = useRef();
     const passwordInput = useRef();
     const confirmPasswordInput = useRef();
     const navigate = useNavigate();
-    const [invalidInput, setInvalidInput] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [registerError, setRegisterError] = useState("");
-    // console.log(registerError);
+    const { register } = useAuth();
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
     const handleRegisterSubmit = async (e) => {
         e.preventDefault();
-        if (
-            emailInput.current.value === "" ||
-            passwordInput.current.value === "" ||
-            confirmPasswordInput.current.value === ""
-        ) {
-            setRegisterError("Must fill all fields!");
-            return;
-        }
-
-        if (
-            !emailExists(emailInput.current.value, usersData, setRegisterError)
-        ) {
-            setRegisterError("Email already exists");
-            // console.log(registerError);
-            return;
-        }
-
         if (
             emailValidation(emailInput.current.value, setRegisterError) &&
             passwordConfirmation(
@@ -101,61 +90,39 @@ export default function Register() {
         ) {
             // setNewUser({...newUser,email:emailInput.current.value,password:passwordInput.current.value});
             try {
-                const response = await fetch(url, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        ...newUser,
-                        email: emailInput.current.value,
-                        password: passwordInput.current.value,
-                    }),
-                });
-                if (!response.ok) {
-                    throw new Error(`Response Error ${response.status}`);
-                }
-                const result = await response.json();
-                // console.log([...usersData, result])
-                setUsersData([...usersData, result]);
-                // console.log(result)
-                emailInput.current.value = "";
-                passwordInput.current.value = "";
-                confirmPasswordInput.current.value = "";
-                sessionStorage.setItem("user", JSON.stringify(result));
+                setRegisterError("");
+                setLoading(true);
+                await register(
+                    emailInput.current.value,
+                    passwordInput.current.value
+                );
+
                 navigate("/dashboard");
             } catch (error) {
-                console.log("Error", error);
+                setRegisterError("Failed to create an account");
             }
         }
-
-        // console.log(registerError);
+        setLoading(false);
     };
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch(url);
-                if (!response.ok) {
-                    throw new Error(
-                        `Failed to fetch user data ${response.status}`
-                    );
-                }
-                const result = await response.json();
-                setUsersData(result);
-                // console.log(usersData);
-            } catch (error) {
-                console.log("Error fetching user data", error);
-            }
-        };
-        fetchData();
-    }, []);
-
     return (
-        <div className="register-form-container">
-            <h1>Create Account</h1>
-            <form id="register-form" onSubmit={handleRegisterSubmit}>
-                <div className="input-container">
+        <div className="login-form-container">
+            <Typography variant="h3">Create Account</Typography>
+            <form id="login-form" onSubmit={handleRegisterSubmit}>
+                <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
+                    <InputLabel htmlFor="outlined-adornment-email">
+                        Email
+                    </InputLabel>
+                    <OutlinedInput
+                        required
+                        id="outlined-adornment-email"
+                        label="Email"
+                        inputRef={emailInput}
+                        type="email"
+                        size="large"
+                    />
+                </FormControl>
+                {/* <div className="input-container">
                     <CiMail className="icon" />
                     <input
                         ref={emailInput}
@@ -164,8 +131,37 @@ export default function Register() {
                         id="email-input"
                         placeholder="Email"
                     />
-                </div>
-                <div className="input-container">
+                </div> */}
+                <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
+                    <InputLabel htmlFor="outlined-adornment-password">
+                        Password
+                    </InputLabel>
+                    <OutlinedInput
+                        required
+                        id="outlined-adornment-password"
+                        label="Password"
+                        size="large"
+                        inputRef={passwordInput}
+                        type={showPassword ? "text" : "password"}
+                        endAdornment={
+                            <InputAdornment position="end">
+                                <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={handleClickShowPassword}
+                                    onMouseDown={handleMouseDownPassword}
+                                    edge="end"
+                                >
+                                    {showPassword ? (
+                                        <VisibilityOff />
+                                    ) : (
+                                        <Visibility />
+                                    )}
+                                </IconButton>
+                            </InputAdornment>
+                        }
+                    />
+                </FormControl>
+                {/* <div className="input-container">
                     <RiLockPasswordLine
                         className="icon"
                         onClick={() => setShowPassword((prev) => !prev)}
@@ -178,8 +174,37 @@ export default function Register() {
                         id="password-input"
                         placeholder="Password"
                     />
-                </div>
-                <div className="input-container">
+                </div> */}
+                <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
+                    <InputLabel htmlFor="outlined-adornment-confirm-password">
+                        Confirm Password
+                    </InputLabel>
+                    <OutlinedInput
+                        required
+                        id="outlined-adornment-confirm-password"
+                        label="Confirm Password"
+                        size="large"
+                        inputRef={confirmPasswordInput}
+                        type={showPassword ? "text" : "password"}
+                        endAdornment={
+                            <InputAdornment position="end">
+                                <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={handleClickShowPassword}
+                                    onMouseDown={handleMouseDownPassword}
+                                    edge="end"
+                                >
+                                    {showPassword ? (
+                                        <VisibilityOff />
+                                    ) : (
+                                        <Visibility />
+                                    )}
+                                </IconButton>
+                            </InputAdornment>
+                        }
+                    />
+                </FormControl>
+                {/* <div className="input-container">
                     <RiLockPasswordLine
                         className="icon"
                         onClick={() => setShowPassword((prev) => !prev)}
@@ -192,15 +217,15 @@ export default function Register() {
                         id="confirm-password-input"
                         placeholder="Confirm Password"
                     />
-                </div>
-                <input type="submit" value="Register" />
+                </div> */}
+                <Button variant="contained" type="submit" disabled={loading}>
+                    Register
+                </Button>
                 <LoginUsingSocialMedia />
-                {registerError ? (
-                    <p className="error-msg">{registerError}</p>
-                ) : (
-                    <p></p>
-                )}
             </form>
+            {registerError && (
+                <BasicModal msg={registerError} setMsg={setRegisterError} />
+            )}
         </div>
     );
 }

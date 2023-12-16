@@ -1,32 +1,47 @@
-import React, { useState } from "react";
-import { BrowserRouter, Link } from "react-router-dom";
+import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-export default function LoginNav({ isLogin, setIsLogin }) {
-    // const [isLogin, setIsLogin] = useState(true);
+export default function LoginNav({
+    isLogin,
+    setIsLogin,
+    setForgotPassword,
+    forgotPass,
+}) {
     const navigate = useNavigate();
     return (
         <div className="top-buttons-container">
             <div className="login-register-btn">
-                <button
-                    id="login-btn"
-                    className={`btn ${isLogin ? "active" : "inactive"}`}
+                <Button
+                    variant={
+                        forgotPass
+                            ? "outlined"
+                            : isLogin
+                            ? "contained"
+                            : "outlined"
+                    }
                     onClick={() => {
                         navigate("/auth/login");
-                        setIsLogin((prev) => !prev);
+                        setForgotPassword(false);
+                        setIsLogin(true);
                     }}
                 >
-                    Login
-                </button>
-                <button
-                    id="register-btn"
-                    className={`btn ${!isLogin ? "active" : "inactive"}`}
+                    Log In
+                </Button>
+                <Button
+                    variant={
+                        forgotPass
+                            ? "outlined"
+                            : !isLogin
+                            ? "contained"
+                            : "outlined"
+                    }
                     onClick={() => {
                         navigate("/auth/register");
-                        setIsLogin((prev) => !prev);
+                        setForgotPassword(false);
+                        setIsLogin(false);
                     }}
                 >
                     Register
-                </button>
+                </Button>
             </div>
         </div>
     );

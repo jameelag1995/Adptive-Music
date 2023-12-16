@@ -15,6 +15,8 @@ import { Route, Routes } from "react-router";
 import LoginMain from "./pages/Login/LoginMain";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Login/Register";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import ForgotPassword from "./pages/Login/ForgotPassword";
 
 function App() {
     const [modeColor, setModeColor] = useState("dark");
@@ -28,19 +30,23 @@ function App() {
         setModeColor((prevMode) => (prevMode === "light" ? "dark" : "light"));
     };
     return (
-
         <ThemeProvider theme={theme}>
             <CssBaseline />
             <ThemeSwitch theme={theme} onChange={handleChange} />
             <AuthProvider>
-              <Routes>
-                <Route exact path="/" element={<Welcome />}/>
-                <Route path="/auth" element={<LoginMain/>}>
-                  <Route path="/auth/login" element={<Login/>}/>
-                  <Route path="/auth/register" element={<Register/>}/>
-                </Route>
-              </Routes>
-                
+                <Routes>
+                    <Route exact path="/" element={<Welcome />} />
+                    <Route path="/auth" element={<LoginMain />}>
+                        <Route path="/auth/login" element={<Login />} />
+                        <Route
+                            path="/auth/forgotPassword"
+                            element={<ForgotPassword />}
+                        />
+                        <Route path="/auth/register" element={<Register />} />
+                    </Route>
+                    <Route path="/dashboard" element={<Dashboard />} />
+                </Routes>
+
                 {/* <h1>Welcome To My App</h1>
                     <Button
                     variant="contained"
