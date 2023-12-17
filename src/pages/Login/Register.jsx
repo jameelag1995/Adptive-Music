@@ -109,7 +109,7 @@ export default function Register() {
         <div className="login-form-container">
             <Typography variant="h3">Create Account</Typography>
             <form id="login-form" onSubmit={handleRegisterSubmit}>
-                <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
+                <FormControl sx={{ m: 1, width: 1 }} variant="outlined">
                     <InputLabel htmlFor="outlined-adornment-email">
                         Email
                     </InputLabel>
@@ -122,17 +122,7 @@ export default function Register() {
                         size="large"
                     />
                 </FormControl>
-                {/* <div className="input-container">
-                    <CiMail className="icon" />
-                    <input
-                        ref={emailInput}
-                        type="email"
-                        name="useremail"
-                        id="email-input"
-                        placeholder="Email"
-                    />
-                </div> */}
-                <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
+                <FormControl sx={{ m: 1, width: 1 }} variant="outlined">
                     <InputLabel htmlFor="outlined-adornment-password">
                         Password
                     </InputLabel>
@@ -161,21 +151,7 @@ export default function Register() {
                         }
                     />
                 </FormControl>
-                {/* <div className="input-container">
-                    <RiLockPasswordLine
-                        className="icon"
-                        onClick={() => setShowPassword((prev) => !prev)}
-                    />
-
-                    <input
-                        ref={passwordInput}
-                        type={!showPassword ? "password" : "text"}
-                        name="userpassword"
-                        id="password-input"
-                        placeholder="Password"
-                    />
-                </div> */}
-                <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
+                <FormControl sx={{ m: 1, width: 1 }} variant="outlined">
                     <InputLabel htmlFor="outlined-adornment-confirm-password">
                         Confirm Password
                     </InputLabel>
@@ -204,20 +180,6 @@ export default function Register() {
                         }
                     />
                 </FormControl>
-                {/* <div className="input-container">
-                    <RiLockPasswordLine
-                        className="icon"
-                        onClick={() => setShowPassword((prev) => !prev)}
-                    />
-
-                    <input
-                        ref={confirmPasswordInput}
-                        type={!showPassword ? "password" : "text"}
-                        name="confirmuserpassword"
-                        id="confirm-password-input"
-                        placeholder="Confirm Password"
-                    />
-                </div> */}
                 <Button variant="contained" type="submit" disabled={loading}>
                     Register
                 </Button>

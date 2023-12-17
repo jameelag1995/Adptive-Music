@@ -48,7 +48,7 @@ export default function Login({ setForgotPassword }) {
             <Typography variant="h3">Welcome Back</Typography>
 
             <form id="login-form" onSubmit={handleSubmit}>
-                <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
+                <FormControl sx={{ m: 1, width: 1 }} variant="outlined">
                     <InputLabel htmlFor="outlined-adornment-email">
                         Email
                     </InputLabel>
@@ -61,7 +61,7 @@ export default function Login({ setForgotPassword }) {
                         size="large"
                     />
                 </FormControl>
-                <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
+                <FormControl sx={{ m: 1, width: 1 }} variant="outlined">
                     <InputLabel htmlFor="outlined-adornment-password">
                         Password
                     </InputLabel>

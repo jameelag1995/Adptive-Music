@@ -6,7 +6,6 @@ import {
     Typography,
 } from "@mui/material";
 import React, { useRef, useState } from "react";
-import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import BasicModal from "../../components/BasicModal/BasicModal";
 
@@ -35,7 +34,7 @@ export default function ForgotPassword() {
         <div className="login-form-container">
             <Typography variant="h3">Reset Password</Typography>
             <form id="login-form" onSubmit={handleSubmit}>
-                <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
+                <FormControl sx={{ m: 1, width: 1 }} variant="outlined">
                     <InputLabel htmlFor="outlined-adornment-email">
                         Email
                     </InputLabel>
