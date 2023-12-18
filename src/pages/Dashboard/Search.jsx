@@ -13,43 +13,25 @@ import { deepPurple, grey, orange } from "@mui/material/colors";
 import BasicCard from "../../components/Card/BasicCard";
 import SearchCategory from "./SearchCategory";
 import Equalizer from "../../components/Equalizer/Equalizer";
-const client_id = import.meta.env.VITE_SPOTIFY_clientId;
-const client_secret = import.meta.env.VITE_SPOTIFY_clientSecret;
-const url = "https://accounts.spotify.com/api/token";
-export default function Search() {
+
+export default function Search({ accessToken, setIsSearching }) {
     const { palette } = useTheme();
-    const [accessToken, setAccessToken] = useState("");
     const [searchInput, setSearchInput] = useState("");
     const [data, setData] = useState();
     const [loading, setLoading] = useState(true);
-    useEffect(() => {
-        const authParameters = {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-            },
-            body:
-                "grant_type=client_credentials&client_id=" +
-                client_id +
-                "&client_secret=" +
-                client_secret,
-        };
-        // GET ACCESS TOKEN
-        fetch(url, authParameters)
-            .then((result) => result.json())
-            .then((data) => setAccessToken(data.access_token));
-    }, []);
 
     console.log(accessToken);
     const handleCategoryClick = (e, category) => {
         search(e, category);
     };
     async function search(e, category = "track") {
-        if (!searchInput) {
+        console.log("searching for ", searchInput);
+        if (searchInput === "") {
+            setIsSearching(false);
             return;
         }
-        console.log("searching for ", searchInput);
 
+        setIsSearching(true);
         // get request using search to get the artist id
         const searchParams = {
             method: "GET",
@@ -102,7 +84,10 @@ export default function Search() {
                     sx={{ ml: 1, flex: 1 }}
                     placeholder="Search Music"
                     inputProps={{ "aria-label": "search google maps" }}
-                    onChange={(e) => setSearchInput(e.target.value)}
+                    onChange={(e) => {
+                        setSearchInput(e.target.value);
+                        search(e);
+                    }}
                 />
                 <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
                 <IconButton

@@ -12,6 +12,7 @@ import React from "react";
 
 export default function BasicCard({ title, artist, cover, type, trackUrl }) {
     return (
+      
         <Slide in style={{transformOrigin:'top', transitionDuration: 600}}>
             <Card
                 sx={{
