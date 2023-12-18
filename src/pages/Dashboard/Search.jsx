@@ -5,6 +5,7 @@ import {
     IconButton,
     InputBase,
     Paper,
+    Typography,
     useTheme,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
@@ -25,8 +26,8 @@ export default function Search({ accessToken, setIsSearching }) {
         search(e, category);
     };
     async function search(e, category = "track") {
-        console.log("searching for ", e.target.value);
-        if (!e.target.value) {
+        console.log("searching for ", searchInput);
+        if (!searchInput) {
             console.log('empty search');
             setIsSearching((prev) => !prev);
             setData([])
@@ -45,7 +46,7 @@ export default function Search({ accessToken, setIsSearching }) {
         console.log(category);
         let searchUrl =
             "https://api.spotify.com/v1/search?q=" +
-            e.target.value +
+            searchInput +
             "&type=" +
             category;
         setTimeout(async () => {
@@ -116,7 +117,7 @@ export default function Search({ accessToken, setIsSearching }) {
                 </Button>
             </ButtonGroup>
             <div className="cards-container">
-                {data?.map((element) => {
+                {data?.length === 0 ? <Typography variant="h3">No Data</Typography>:data?.map((element) => {
                     if (element.type === "track") {
                         return (
                             <BasicCard

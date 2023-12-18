@@ -1,3 +1,13 @@
 .Events{
     justify-content: space-between;
 }
+.eventsContainer{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+}
+.eventsContainer img{
+    
+}
