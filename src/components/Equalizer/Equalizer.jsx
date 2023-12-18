@@ -20,12 +20,9 @@ const Equalizer = () => {
     // };
 
     return (
-        <div className="equalizer">
+        <div className="equalizer" >
             {barHeights.map((height, index) => (
-                <div
-                    key={index}
-                    className="bar"
-                ></div>
+                <div key={index} className="bar"></div>
             ))}
         </div>
     );

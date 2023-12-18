@@ -12,14 +12,16 @@ import React, { useEffect, useState } from "react";
 import { deepPurple, grey, orange } from "@mui/material/colors";
 import BasicCard from "../../components/Card/BasicCard";
 import SearchCategory from "./SearchCategory";
-const client_id = "142cd4299f6541d79e436eb87b200559";
-const client_secret = "1891f7051b9749fc96af91b3b12a76f2";
+import Equalizer from "../../components/Equalizer/Equalizer";
+const client_id = import.meta.env.VITE_SPOTIFY_clientId;
+const client_secret = import.meta.env.VITE_SPOTIFY_clientSecret;
 const url = "https://accounts.spotify.com/api/token";
 export default function Search() {
     const { palette } = useTheme();
     const [accessToken, setAccessToken] = useState("");
     const [searchInput, setSearchInput] = useState("");
     const [data, setData] = useState();
+    const [loading, setLoading] = useState(true);
     useEffect(() => {
         const authParameters = {
             method: "POST",
@@ -62,14 +64,16 @@ export default function Search() {
             searchInput +
             "&type=" +
             category;
-        const artistId = await fetch(searchUrl, searchParams)
-            .then((response) => response.json())
-            .then((searchData) => {
-                const newData = Object.values(searchData)[0].items;
-                console.log(Object.values(searchData)[0].items);
-                setData(newData);
-                return searchData;
-            });
+        setTimeout(async () => {
+            const searchResult = await fetch(searchUrl, searchParams)
+                .then((response) => response.json())
+                .then((searchData) => {
+                    const newData = Object.values(searchData)[0].items;
+                    console.log(Object.values(searchData)[0].items);
+                    setData(newData);
+                    return searchData;
+                });
+        }, 600);
         // console.log("artist id is :", artistId);
         // get request with artist id grab all albums from that artist
         // const albums = await fetch(
@@ -111,10 +115,7 @@ export default function Search() {
                 </IconButton>
             </Paper>
             <ButtonGroup variant="outlined" aria-label="outlined button group">
-                <Button
-                    autoFocus
-                    onClick={(e) => handleCategoryClick(e, "track")}
-                >
+                <Button onClick={(e) => handleCategoryClick(e, "track")}>
                     Tracks
                 </Button>
                 <Button onClick={(e) => handleCategoryClick(e, "artist")}>
@@ -141,7 +142,7 @@ export default function Search() {
                             />
                         );
                     }
-                    if (element.type === "album"){
+                    if (element.type === "album") {
                         return (
                             <BasicCard
                                 key={element.id}
@@ -153,7 +154,7 @@ export default function Search() {
                             />
                         );
                     }
-                    if (element.type === "playlist"){
+                    if (element.type === "playlist") {
                         return (
                             <BasicCard
                                 key={element.id}
@@ -165,7 +166,7 @@ export default function Search() {
                             />
                         );
                     }
-                    if (element.type === "artist"){
+                    if (element.type === "artist") {
                         return (
                             <BasicCard
                                 key={element.id}
@@ -179,6 +180,7 @@ export default function Search() {
                     }
                 })}
             </div>
+            {/* <Equalizer loading={loading} /> */}
         </div>
     );
 }

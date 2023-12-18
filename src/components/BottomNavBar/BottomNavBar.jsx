@@ -5,7 +5,7 @@ import FolderIcon from "@mui/icons-material/Folder";
 import RestoreIcon from "@mui/icons-material/Restore";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import { AccountCircle, Dashboard, LocalActivity } from "@mui/icons-material";
+import { AccountCircle, Dashboard, LibraryMusic, LocalActivity } from "@mui/icons-material";
 
 export default function BottomNavBar() {
     const [value, setValue] = React.useState("recents");
@@ -27,9 +27,9 @@ export default function BottomNavBar() {
                 icon={<Dashboard />}
             />
             <BottomNavigationAction
-                label="Favorites"
-                value="favorites"
-                icon={<FavoriteIcon />}
+                label="Library"
+                value="library"
+                icon={<LibraryMusic />}
             />
             <BottomNavigationAction
                 label="Events"

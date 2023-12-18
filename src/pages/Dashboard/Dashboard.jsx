@@ -17,11 +17,11 @@ export default function Dashboard() {
     }, []);
     return (
         <div className="Dashboard Page">
-            <Link to="/auth/login">
+            {/* <Link to="/auth/login">
                 <Button variant="outlined" color="error" onClick={logout}>
                     Logout
                 </Button>
-            </Link>
+            </Link> */}
 
             <Search />
             <BottomNavBar />
