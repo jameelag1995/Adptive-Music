@@ -17,6 +17,7 @@ import Login from "./pages/Login/Login";
 import Register from "./pages/Login/Register";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import ForgotPassword from "./pages/Login/ForgotPassword";
+import Events from "./pages/Events/Events";
 
 function App() {
     const [modeColor, setModeColor] = useState("dark");
@@ -45,6 +46,7 @@ function App() {
                         <Route path="/auth/register" element={<Register />} />
                     </Route>
                     <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/events" element={<Events />} />
                 </Routes>
 
                 {/* <h1>Welcome To My App</h1>

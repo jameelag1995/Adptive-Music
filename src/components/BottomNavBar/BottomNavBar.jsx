@@ -5,7 +5,13 @@ import FolderIcon from "@mui/icons-material/Folder";
 import RestoreIcon from "@mui/icons-material/Restore";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import { AccountCircle, Dashboard, LibraryMusic, LocalActivity } from "@mui/icons-material";
+import {
+    AccountCircle,
+    Dashboard,
+    LibraryMusic,
+    LocalActivity,
+} from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 export default function BottomNavBar() {
     const [value, setValue] = React.useState("recents");
@@ -13,18 +19,18 @@ export default function BottomNavBar() {
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
-
+    const navigate = useNavigate();
     return (
         <BottomNavigation
-            sx={{ width: 1, position:"sticky", bottom:'0vh',zIndex:99 }}
+            sx={{ width: 1, position: "sticky", bottom: "0vh", zIndex: 99 }}
             value={value}
             onChange={handleChange}
-            
         >
             <BottomNavigationAction
                 label="Dashboard"
                 value="dashboard"
                 icon={<Dashboard />}
+                onClick={()=>navigate("/dashboard")}
             />
             <BottomNavigationAction
                 label="Library"
@@ -35,6 +41,7 @@ export default function BottomNavBar() {
                 label="Events"
                 value="events"
                 icon={<LocalActivity />}
+                onClick={()=>navigate("/events")}
             />
             <BottomNavigationAction
                 label="Profile"

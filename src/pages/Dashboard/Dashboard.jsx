@@ -7,36 +7,16 @@ import "./Dashboard.css";
 import Search from "./Search";
 import BottomNavBar from "../../components/BottomNavBar/BottomNavBar";
 import PlaylistCard from "../../components/Card/PlaylistCard";
-const client_id = import.meta.env.VITE_SPOTIFY_clientId;
-const client_secret = import.meta.env.VITE_SPOTIFY_clientSecret;
-const url = "https://accounts.spotify.com/api/token";
+
 export default function Dashboard() {
-    const { currentUser } = useAuth();
+    const { currentUser, logout, accessToken } = useAuth();
     const navigate = useNavigate();
-    const { logout } = useAuth();
     const [data, setData] = useState();
     const [playlists, setPlaylists] = useState();
-    const [accessToken, setAccessToken] = useState("");
     const [isSearching, setIsSearching] = useState(false);
+
     useEffect(() => {
         if (!currentUser) return navigate("/auth/login");
-        const authParameters = {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-            },
-            body:
-                "grant_type=client_credentials&client_id=" +
-                client_id +
-                "&client_secret=" +
-                client_secret,
-        };
-        // GET ACCESS TOKEN
-        fetch(url, authParameters)
-            .then((result) => result.json())
-            .then((data) => setAccessToken(data.access_token));
-    }, []);
-    useEffect(() => {
         if (!accessToken) {
             return;
         }
@@ -106,7 +86,7 @@ export default function Dashboard() {
                             />
                         );
                     })}
-                    {data?.map((genre, index) => {
+                    {/* {data?.map((genre, index) => {
                         return (
                             <Paper
                                 sx={{
@@ -123,7 +103,7 @@ export default function Dashboard() {
                                 {genre}
                             </Paper>
                         );
-                    })}
+                    })} */}
                 </div>
             )}
             <BottomNavBar />

@@ -25,9 +25,11 @@ export default function Search({ accessToken, setIsSearching }) {
         search(e, category);
     };
     async function search(e, category = "track") {
-        console.log("searching for ", searchInput);
-        if (searchInput === "") {
-            setIsSearching(false);
+        console.log("searching for ", e.target.value);
+        if (!e.target.value) {
+            console.log('empty search');
+            setIsSearching((prev) => !prev);
+            setData([])
             return;
         }
 
@@ -43,7 +45,7 @@ export default function Search({ accessToken, setIsSearching }) {
         console.log(category);
         let searchUrl =
             "https://api.spotify.com/v1/search?q=" +
-            searchInput +
+            e.target.value +
             "&type=" +
             category;
         setTimeout(async () => {
