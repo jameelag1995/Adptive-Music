@@ -3,7 +3,7 @@ import { useAuth } from "../../context/AuthContext";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Typography } from "@mui/material";
 import BasicCard from "../../components/Card/BasicCard";
-import { Download } from "@mui/icons-material";
+import { ArrowBack, Download } from "@mui/icons-material";
 import NotFound from "../NotFound/NotFound";
 export default function Albums() {
     const { accessToken } = useAuth();
@@ -49,6 +49,16 @@ export default function Albums() {
     }, []);
     return (
         <div className="Albums Page">
+            <ArrowBack
+                sx={{
+                    width: "40px",
+                    height: "40px",
+                    position: "absolute",
+                    left: "8px",
+                    top: "8px",
+                }}
+                onClick={() => navigate(-1)}
+            />
             <img
                 src={albumData?.images[0]?.url}
                 alt="Album Cover"

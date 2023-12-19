@@ -5,6 +5,7 @@ import { Slide, Typography } from "@mui/material";
 import "./Player.css";
 import {
     AddToPhotos,
+    ArrowBack,
     Equalizer,
     FastForward,
     FastRewind,
@@ -48,6 +49,16 @@ export default function Player() {
     }, []);
     return (
         <Slide in style={{transitionDuration: 600 }} direction="up" mountOnEnter unmountOnExit>
+            <ArrowBack
+                sx={{
+                    width: "40px",
+                    height: "40px",
+                    position: "absolute",
+                    left: "8px",
+                    top: "8px",
+                }}
+                onClick={() => navigate(-1)}
+            />
             <div className="Player Page">
                 <img
                     src={trackData?.album.images[0].url}

@@ -3,7 +3,7 @@ import { useAuth } from "../../context/AuthContext";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Typography } from "@mui/material";
 import BasicCard from "../../components/Card/BasicCard";
-import { Download } from "@mui/icons-material";
+import { ArrowBack, Download } from "@mui/icons-material";
 
 export default function Playlist() {
     const { accessToken } = useAuth();
@@ -27,7 +27,7 @@ export default function Playlist() {
             setPlaylistData(result);
         } catch (error) {
             console.log(error.message);
-            navigate('/notfound');
+            navigate("/notfound");
         }
         // const playlistResult = await fetch(playlistUrl, playlistParams)
         //     .then((response) => {
@@ -51,6 +51,16 @@ export default function Playlist() {
     }, []);
     return (
         <div className="Playlist Page">
+            <ArrowBack
+                sx={{
+                    width: "40px",
+                    height: "40px",
+                    position: "absolute",
+                    left: "8px",
+                    top: "8px",
+                }}
+                onClick={() => navigate(-1)}
+            />
             <img
                 src={playlistData?.images[0].url}
                 alt="Playlist Cover"

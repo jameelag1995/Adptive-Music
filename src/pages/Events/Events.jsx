@@ -1,4 +1,4 @@
-import { Add, Close, HdrPlus } from "@mui/icons-material";
+import { Add, ArrowBack, Close, HdrPlus } from "@mui/icons-material";
 import React, { useRef, useState } from "react";
 import BottomNavBar from "../../components/BottomNavBar/BottomNavBar";
 import {
@@ -26,6 +26,7 @@ import ImageUploadCard from "./ImageUploadCard";
 import BasicCard from "../../components/Card/BasicCard";
 import EventCard from "../../components/Card/EventCard";
 import { musicalEvents } from "../../data/data";
+import { useNavigate } from "react-router-dom";
 const eventDemo = {
     title: "New Years Party ",
     lineup: "travis scott, drake, j.cole, kendrick lamar",
@@ -48,6 +49,7 @@ export default function Events() {
     const ticketsUrlRef = useRef();
     const coverRef = useRef();
     const descriptionRef = useRef();
+    const navigate = useNavigate();
     const handleAddEvent = () => {
         console.log("clicked");
         setAddingEvent(true);
@@ -72,6 +74,16 @@ export default function Events() {
     };
     return (
         <div className="Events Page">
+            <ArrowBack
+                sx={{
+                    width: "40px",
+                    height: "40px",
+                    position: "absolute",
+                    left: "8px",
+                    top: "8px",
+                }}
+                onClick={() => navigate(-1)}
+            />
             <div
                 className="add-event"
                 style={{
@@ -200,7 +212,6 @@ export default function Events() {
                     </FormControl>
                 </Paper>
             )}
-            
         </div>
     );
 }

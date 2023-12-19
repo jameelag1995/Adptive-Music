@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate, useParams } from "react-router-dom";
 import BasicCard from "../../components/Card/BasicCard";
+import { ArrowBack } from "@mui/icons-material";
 
 export default function Artist() {
     const { accessToken } = useAuth();
@@ -48,6 +49,16 @@ export default function Artist() {
 
     return (
         <div className="Artist Page">
+            <ArrowBack
+                sx={{
+                    width: "40px",
+                    height: "40px",
+                    position: "absolute",
+                    left: "8px",
+                    top: "8px",
+                }}
+                onClick={() => navigate(-1)}
+            />
             <Avatar
                 sx={{ width: "80px", height: "80px" }}
                 src={artistData?.images[1].url}
