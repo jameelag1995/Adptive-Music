@@ -2,18 +2,19 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Paper } from "@mui/material";
-import GetToken from "./Search";
+import GetToken from "../../components/Search/Search";
 import "./Dashboard.css";
-import Search from "./Search";
+import Search from "../../components/Search/Search";
 import BottomNavBar from "../../components/BottomNavBar/BottomNavBar";
 import PlaylistCard from "../../components/Card/PlaylistCard";
+import Equalizer from "../../components/Equalizer/Equalizer";
 
 export default function Dashboard() {
     const { currentUser, logout, accessToken } = useAuth();
     const navigate = useNavigate();
     const [data, setData] = useState();
-    const [playlists, setPlaylists] = useState();
     const [isSearching, setIsSearching] = useState(false);
+    const [playlists, setPlaylists] = useState();
 
     useEffect(() => {
         if (!currentUser) return navigate("/auth/login");
@@ -63,9 +64,19 @@ export default function Dashboard() {
                     setPlaylists(playlists.playlists.items);
                     return playlists;
                 });
-        }, 600);
+        }, 1000);
     }, [accessToken]);
-
+    // if (!playlists) {
+    //     return (
+    //         <div className="equalizers-container">
+    //             <div className="equalizers">
+    //                 <Equalizer />
+    //                 <Equalizer />
+    //                 <Equalizer />
+    //             </div>
+    //         </div>
+    //     );
+    // }
     return (
         <div className="Dashboard Page">
             {/* <Link to="/auth/login">
@@ -106,7 +117,6 @@ export default function Dashboard() {
                     })} */}
                 </div>
             )}
-            <BottomNavBar />
         </div>
     );
 }

@@ -11,16 +11,17 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import React, { useEffect, useState } from "react";
 import { deepPurple, grey, orange } from "@mui/material/colors";
-import BasicCard from "../../components/Card/BasicCard";
+import BasicCard from "../Card/BasicCard";
 import SearchCategory from "./SearchCategory";
-import Equalizer from "../../components/Equalizer/Equalizer";
+import Equalizer from "../Equalizer/Equalizer";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Search({ accessToken, setIsSearching }) {
     const { palette } = useTheme();
     const [searchInput, setSearchInput] = useState("");
     const [data, setData] = useState();
     const [loading, setLoading] = useState(true);
-
+    const navigate = useNavigate();
     console.log(accessToken);
     const handleCategoryClick = (e, category) => {
         search(e, category);
@@ -28,9 +29,9 @@ export default function Search({ accessToken, setIsSearching }) {
     async function search(e, category = "track") {
         console.log("searching for ", searchInput);
         if (!searchInput) {
-            console.log('empty search');
+            console.log("empty search");
             setIsSearching((prev) => !prev);
-            setData([])
+            setData([]);
             return;
         }
 
@@ -117,56 +118,62 @@ export default function Search({ accessToken, setIsSearching }) {
                 </Button>
             </ButtonGroup>
             <div className="cards-container">
-                {data?.length === 0 ? <Typography variant="h3">No Data</Typography>:data?.map((element) => {
-                    if (element.type === "track") {
-                        return (
-                            <BasicCard
-                                key={element.id}
-                                cover={element?.album.images[1]?.url}
-                                artist={element?.artists[0].name}
-                                title={element?.name}
-                                type={element?.type}
-                                elementUrl={element?.uri}
-                            />
-                        );
-                    }
-                    if (element.type === "album") {
-                        return (
-                            <BasicCard
-                                key={element.id}
-                                cover={element?.images[1]?.url}
-                                artist={element?.artists[0].name}
-                                title={element?.name}
-                                type={element?.type}
-                                elementUrl={element?.uri}
-                            />
-                        );
-                    }
-                    if (element.type === "playlist") {
-                        return (
-                            <BasicCard
-                                key={element.id}
-                                cover={element?.images[0]?.url}
-                                artist={element?.owner.display_name}
-                                title={element?.name}
-                                type={element?.type}
-                                elementUrl={element?.uri}
-                            />
-                        );
-                    }
-                    if (element.type === "artist") {
-                        return (
-                            <BasicCard
-                                key={element.id}
-                                cover={element?.images[1]?.url}
-                                artist={""}
-                                title={element?.name}
-                                type={element?.type}
-                                elementUrl={element?.uri}
-                            />
-                        );
-                    }
-                })}
+                {data?.length === 0 ? (
+                    <Typography variant="h3">No Data</Typography>
+                ) : (
+                    data?.map((element) => {
+                        if (element.type === "track") {
+                            return (
+                                <BasicCard
+                                    key={element.id}
+                                    id={element.id}
+                                    cover={element?.album.images[1]?.url}
+                                    artist={element?.artists[0].name}
+                                    title={element?.name}
+                                    type={element?.type}
+                                    elementUrl={element?.uri}
+                                />
+                            );
+                        } else if (element.type === "album") {
+                            return (
+                                <BasicCard
+                                    key={element.id}
+                                    id={element.id}
+                                    cover={element?.images[1]?.url}
+                                    artist={element?.artists[0].name}
+                                    title={element?.name}
+                                    type={element?.type}
+                                    elementUrl={element?.uri}
+                                />
+                            );
+                        } else if (element.type === "playlist") {
+                            return (
+                                <BasicCard
+                                    key={element.id}
+                                    id={element.id}
+                                    cover={element?.images[0]?.url}
+                                    artist={element?.owner.display_name}
+                                    title={element?.name}
+                                    type={element?.type}
+                                    elementUrl={element?.uri}
+                                />
+                            );
+                        } else if (element.type === "artist") {
+                            return (
+                                <BasicCard
+                                    artistId={element?.id}
+                                    id={element?.id}
+                                    key={element?.id}
+                                    cover={element?.images[1]?.url}
+                                    artist={""}
+                                    title={element?.name}
+                                    type={element?.type}
+                                    elementUrl={element?.uri}
+                                />
+                            );
+                        }
+                    })
+                )}
             </div>
             {/* <Equalizer loading={loading} /> */}
         </div>

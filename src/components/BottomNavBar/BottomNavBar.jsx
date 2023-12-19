@@ -14,9 +14,10 @@ import {
 import { useNavigate } from "react-router-dom";
 
 export default function BottomNavBar() {
-    const [value, setValue] = React.useState("recents");
+    const [value, setValue] = React.useState("dashboard");
 
     const handleChange = (event, newValue) => {
+        navigate(`/${newValue}`);
         setValue(newValue);
     };
     const navigate = useNavigate();
@@ -30,7 +31,6 @@ export default function BottomNavBar() {
                 label="Dashboard"
                 value="dashboard"
                 icon={<Dashboard />}
-                onClick={()=>navigate("/dashboard")}
             />
             <BottomNavigationAction
                 label="Library"
@@ -41,7 +41,6 @@ export default function BottomNavBar() {
                 label="Events"
                 value="events"
                 icon={<LocalActivity />}
-                onClick={()=>navigate("/events")}
             />
             <BottomNavigationAction
                 label="Profile"

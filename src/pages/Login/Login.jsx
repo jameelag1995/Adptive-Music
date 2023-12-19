@@ -58,7 +58,7 @@ export default function Login({ setForgotPassword }) {
                         label="Email"
                         inputRef={email}
                         type="email"
-                        size="large"
+                        sx={{ height: "50px" }}
                     />
                 </FormControl>
                 <FormControl sx={{ m: 1, width: 1 }} variant="outlined">
@@ -70,7 +70,7 @@ export default function Login({ setForgotPassword }) {
                         inputRef={password}
                         id="outlined-adornment-password"
                         label="Password"
-                        size="large"
+                        sx={{ height: "50px" }}
                         type={showPassword ? "text" : "password"}
                         endAdornment={
                             <InputAdornment position="end">

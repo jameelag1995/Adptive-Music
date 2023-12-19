@@ -1,6 +1,7 @@
 import { Album, MusicNote, Person, QueueMusic } from "@mui/icons-material";
 import {
     Card,
+    CardActionArea,
     CardContent,
     CardMedia,
     Divider,
@@ -9,18 +10,33 @@ import {
     Typography,
 } from "@mui/material";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-export default function BasicCard({ title, artist, cover, type, trackUrl }) {
+export default function BasicCard({
+    title,
+    artist,
+    cover,
+    type,
+    trackUrl,
+    id,
+}) {
+    const navigate = useNavigate();
+    function handleClick() {
+        console.log(id);
+        navigate(`/${type}/${id}`);
+    }
+    // console.log(id);
     return (
-      
-        <Slide in style={{transformOrigin:'top', transitionDuration: 600}}>
+        <Slide in style={{ transformOrigin: "top", transitionDuration: 600 }}>
             <Card
+                onClick={handleClick}
                 sx={{
                     width: 1,
                     borderRadius: 6,
                     display: "flex",
                     justifyContent: "start",
                     alignItems: "center",
+                    zIndex: "999",
                 }}
             >
                 <CardMedia

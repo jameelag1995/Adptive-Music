@@ -68,6 +68,7 @@ export default function Register() {
     const emailInput = useRef();
     const passwordInput = useRef();
     const confirmPasswordInput = useRef();
+    const fullNameRef = useRef();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [registerError, setRegisterError] = useState("");
@@ -94,7 +95,8 @@ export default function Register() {
                 setLoading(true);
                 await register(
                     emailInput.current.value,
-                    passwordInput.current.value
+                    passwordInput.current.value,
+                    fullNameRef.current.value
                 );
 
                 navigate("/dashboard");
@@ -104,6 +106,7 @@ export default function Register() {
         }
         setLoading(false);
     };
+    
 
     return (
         <div className="login-form-container">
@@ -119,6 +122,19 @@ export default function Register() {
                         label="Email"
                         inputRef={emailInput}
                         type="email"
+                        size="large"
+                    />
+                </FormControl>
+                <FormControl sx={{ m: 1, width: 1 }} variant="outlined">
+                    <InputLabel htmlFor="outlined-adornment-email">
+                        Full Name
+                    </InputLabel>
+                    <OutlinedInput
+                        required
+                        id="outlined-adornment-full-name"
+                        label="Full Name"
+                        inputRef={fullNameRef}
+                        type="text"
                         size="large"
                     />
                 </FormControl>

@@ -11,8 +11,8 @@ import '@fontsource/roboto/700.css'; */
     justify-content: start;
     align-items: center;
     width: 100%;
-    min-height: 100vh ;
+    min-height: 100vh;
     position: relative;
-    padding: 48px 16px 0 16px;
+    padding: 48px 16px 16px 16px;
     gap: 32px;
 }

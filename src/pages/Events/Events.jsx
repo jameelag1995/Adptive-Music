@@ -200,7 +200,7 @@ export default function Events() {
                     </FormControl>
                 </Paper>
             )}
-            <BottomNavBar />
+            
         </div>
     );
 }

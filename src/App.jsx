@@ -18,6 +18,10 @@ import Register from "./pages/Login/Register";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import ForgotPassword from "./pages/Login/ForgotPassword";
 import Events from "./pages/Events/Events";
+import Profile from "./pages/Profile/Profile";
+import BottomNavBar from "./components/BottomNavBar/BottomNavBar";
+import Library from "./pages/Library/Library";
+import Artist from "./pages/Artist/Artist";
 
 function App() {
     const [modeColor, setModeColor] = useState("dark");
@@ -45,8 +49,51 @@ function App() {
                         />
                         <Route path="/auth/register" element={<Register />} />
                     </Route>
-                    <Route path="/dashboard" element={<Dashboard />} />
-                    <Route path="/events" element={<Events />} />
+                    <Route
+                        path="/dashboard"
+                        element={
+                            <>
+                                <Dashboard />
+                                <BottomNavBar />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="/events"
+                        element={
+                            <>
+                                <Events />
+                                <BottomNavBar />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="/profile"
+                        element={
+                            <>
+                                <Profile />
+                                <BottomNavBar />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="/library"
+                        element={
+                            <>
+                                <Library />
+                                <BottomNavBar />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="/artist/:artistId"
+                        element={
+                            <>
+                                <Artist />
+                                <BottomNavBar />
+                            </>
+                        }
+                    />
                 </Routes>
 
                 {/* <h1>Welcome To My App</h1>
