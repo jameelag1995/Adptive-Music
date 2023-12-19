@@ -25,6 +25,7 @@ import Artist from "./pages/Artist/Artist";
 import Playlist from "./pages/Playlist/Playlist";
 import Albums from "./pages/Albums/Albums";
 import NotFound from "./pages/NotFound/NotFound";
+import Player from "./pages/Player/Player";
 
 function App() {
     const [modeColor, setModeColor] = useState("dark");
@@ -111,6 +112,15 @@ function App() {
                         element={
                             <>
                                 <Albums />
+                                <BottomNavBar />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="/track/:trackId"
+                        element={
+                            <>
+                                <Player />
                                 <BottomNavBar />
                             </>
                         }

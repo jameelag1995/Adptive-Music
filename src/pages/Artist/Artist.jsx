@@ -1,7 +1,7 @@
 import { Avatar, Button, Paper, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import BasicCard from "../../components/Card/BasicCard";
 
 export default function Artist() {
@@ -9,6 +9,7 @@ export default function Artist() {
     const { artistId } = useParams();
     const [artistData, setArtistData] = useState();
     const [artistAlbums, setArtistAlbums] = useState();
+    const navigate = useNavigate();
 
     const fetchData = async () => {
         const artistParams = {
@@ -20,25 +21,26 @@ export default function Artist() {
         };
         let artistUrl = "https://api.spotify.com/v1/artists/" + artistId;
 
-        const artistResult = await fetch(artistUrl, artistParams)
-            .then((response) => response.json())
-            .then((artistResult) => {
-                console.log(artistResult);
-                // const newData = Object.values(artistResult)[0].items;
-                // console.log(Object.values(artistResult)[0].items);
-                setArtistData(artistResult);
-            });
+        try {
+            const response = await fetch(artistUrl, artistParams);
+            if (!response.ok) throw new Error("fetch failed");
+            const result = await response.json();
+            setArtistData(result);
+        } catch (error) {
+            console.log(error.message);
+            navigate("/notfound");
+        }
 
         let artistAlbumsUrl = `https://api.spotify.com/v1/artists/${artistId}/albums`;
-
-        const artistAlbumsResult = await fetch(artistAlbumsUrl, artistParams)
-            .then((response) => response.json())
-            .then((artistResult) => {
-                console.log(artistResult?.items);
-                // const newData = Object.values(artistResult)[0].items;
-                // console.log(Object.values(artistResult)[0].items);
-                setArtistAlbums(artistResult.items);
-            });
+        try {
+            const response = await fetch(artistAlbumsUrl, artistParams);
+            if (!response.ok) throw new Error("fetching albums failed");
+            const result = await response.json();
+            setArtistAlbums(result.items);
+        } catch (error) {
+            console.log(error.message);
+            navigate("/notfound");
+        }
     };
     useEffect(() => {
         fetchData();

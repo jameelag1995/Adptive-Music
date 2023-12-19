@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Button, Typography } from "@mui/material";
 import BasicCard from "../../components/Card/BasicCard";
 import { Download } from "@mui/icons-material";
+import NotFound from "../NotFound/NotFound";
 export default function Albums() {
     const { accessToken } = useAuth();
     const { albumId } = useParams();
     const [albumData, setAlbumData] = useState();
-
+    const navigate = useNavigate();
     const fetchData = async () => {
         const albumParams = {
             method: "GET",
@@ -18,15 +19,30 @@ export default function Albums() {
             },
         };
         let albumUrl = `https://api.spotify.com/v1/albums/${albumId}`;
-
-        const albumResult = await fetch(albumUrl, albumParams)
-            .then((response) => response.json())
-            .then((albumResult) => {
-                console.log(albumResult);
-                // const newData = Object.values(albumResult)[0].items;
-                // console.log(Object.values(albumResult)[0].items);
-                setAlbumData(albumResult);
-            });
+        try {
+            const response = await fetch(albumUrl, albumParams);
+            if (!response.ok) {
+                throw new Error("fetch failed");
+            }
+            const result = await response.json();
+            console.log(result);
+            setAlbumData(result);
+        } catch (err) {
+            console.log(err.message);
+            navigate("/notfound");
+        }
+        // const albumResult = await fetch(albumUrl, albumParams)
+        //     .then((response) => response.json())
+        //     .then((albumResult) => {
+        //         console.log(albumResult);
+        //         // const newData = Object.values(albumResult)[0].items;
+        //         // console.log(Object.values(albumResult)[0].items);
+        //         setAlbumData(albumResult);
+        //     })
+        //     .catch((err) => {
+        //         console.log("error");
+        //         return <NotFound />;
+        //     });
     };
     useEffect(() => {
         fetchData();
@@ -39,14 +55,17 @@ export default function Albums() {
                 style={{ width: "300px", height: "300px" }}
             />
 
-            <Typography variant="h3" sx={{textShadow:"0 0 4px"}}>{albumData?.name}</Typography>
+            <Typography variant="h3" sx={{ textShadow: "0 0 4px" }}>
+                {albumData?.name}
+            </Typography>
             <div
                 className="buttons-container"
                 style={{
                     display: "flex",
-                    justifyContent: "space-between",
+                    justifyContent: "center",
                     alignItems: "center",
                     width: "100%",
+                    gap: "32px",
                 }}
             >
                 <Button

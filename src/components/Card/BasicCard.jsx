@@ -37,6 +37,7 @@ export default function BasicCard({
                     justifyContent: "start",
                     alignItems: "center",
                     zIndex: "999",
+                    gap:"16px"
                 }}
             >
                 <CardMedia
@@ -49,9 +50,10 @@ export default function BasicCard({
                     sx={{
                         display: "flex",
                         alignItems: "center",
-                        justifyContent: "space-between",
+                        justifyContent: "space-evenly",
                         gap: "8px",
-                        width: "100%-100px",
+                        width: "calc(100%-100px)",
+                        padding: "0 0 0 4px",
                     }}
                 >
                     {type === "track" ? (

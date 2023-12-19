@@ -1,0 +1,23 @@
+.Player {
+    justify-content: start;
+}
+.track-info {
+    width: 100%;
+}
+.extra-buttons {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.bottom-buttons {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.playing-on {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

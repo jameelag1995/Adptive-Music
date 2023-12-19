@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Button, Typography } from "@mui/material";
 import BasicCard from "../../components/Card/BasicCard";
 import { Download } from "@mui/icons-material";
@@ -9,7 +9,7 @@ export default function Playlist() {
     const { accessToken } = useAuth();
     const { playlistId } = useParams();
     const [playlistData, setPlaylistData] = useState();
-
+    const navigate = useNavigate();
     const fetchData = async () => {
         const playlistParams = {
             method: "GET",
@@ -20,14 +20,31 @@ export default function Playlist() {
         };
         let playlistUrl = `https://api.spotify.com/v1/playlists/${playlistId}`;
 
-        const playlistResult = await fetch(playlistUrl, playlistParams)
-            .then((response) => response.json())
-            .then((playlistResult) => {
-                console.log(playlistResult);
-                // const newData = Object.values(playlistResult)[0].items;
-                // console.log(Object.values(playlistResult)[0].items);
-                setPlaylistData(playlistResult);
-            });
+        try {
+            const response = await fetch(playlistUrl, playlistParams);
+            if (!response.ok) throw new Error("fetch failed");
+            const result = await response.json();
+            setPlaylistData(result);
+        } catch (error) {
+            console.log(error.message);
+            navigate('/notfound');
+        }
+        // const playlistResult = await fetch(playlistUrl, playlistParams)
+        //     .then((response) => {
+        //         if (!response.ok) throw new Error("fetch failed");
+
+        //         return response.json();
+        //     })
+        //     .then((playlistResult) => {
+        //         console.log(playlistResult);
+        //         // const newData = Object.values(playlistResult)[0].items;
+        //         // console.log(Object.values(playlistResult)[0].items);
+        //         setPlaylistData(playlistResult);
+        //     })
+        //     .catch((err) => {
+        //         console.log(err.message);
+        //         navigate("/notfound");
+        //     });
     };
     useEffect(() => {
         fetchData();
@@ -35,7 +52,7 @@ export default function Playlist() {
     return (
         <div className="Playlist Page">
             <img
-                src={playlistData?.images[0]?.url}
+                src={playlistData?.images[0].url}
                 alt="Playlist Cover"
                 style={{ width: "300px", height: "300px" }}
             />
@@ -45,7 +62,7 @@ export default function Playlist() {
                 className="buttons-container"
                 style={{
                     display: "flex",
-                    justifyContent: "end",
+                    justifyContent: "center",
                     alignItems: "center",
                     width: "100%",
                     gap: "32px",
