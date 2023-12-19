@@ -22,6 +22,9 @@ import Profile from "./pages/Profile/Profile";
 import BottomNavBar from "./components/BottomNavBar/BottomNavBar";
 import Library from "./pages/Library/Library";
 import Artist from "./pages/Artist/Artist";
+import Playlist from "./pages/Playlist/Playlist";
+import Albums from "./pages/Albums/Albums";
+import NotFound from "./pages/NotFound/NotFound";
 
 function App() {
     const [modeColor, setModeColor] = useState("dark");
@@ -90,6 +93,33 @@ function App() {
                         element={
                             <>
                                 <Artist />
+                                <BottomNavBar />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="/playlist/:playlistId"
+                        element={
+                            <>
+                                <Playlist />
+                                <BottomNavBar />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="/album/:albumId"
+                        element={
+                            <>
+                                <Albums />
+                                <BottomNavBar />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="*"
+                        element={
+                            <>
+                                <NotFound />
                                 <BottomNavBar />
                             </>
                         }

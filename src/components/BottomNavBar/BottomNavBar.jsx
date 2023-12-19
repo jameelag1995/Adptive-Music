@@ -23,7 +23,7 @@ export default function BottomNavBar() {
     const navigate = useNavigate();
     return (
         <BottomNavigation
-            sx={{ width: 1, position: "sticky", bottom: "0vh", zIndex: 99 }}
+            sx={{ width: 1, position: "sticky", bottom: "0vh", zIndex: 9999 }}
             value={value}
             onChange={handleChange}
         >

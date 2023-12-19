@@ -92,6 +92,7 @@ export default function Dashboard() {
                         return (
                             <PlaylistCard
                                 key={playlist.id}
+                                id={playlist.id}
                                 img={playlist.images[0].url}
                                 name={playlist.name}
                             />

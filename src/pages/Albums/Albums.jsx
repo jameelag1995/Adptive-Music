@@ -4,51 +4,49 @@ import { useParams } from "react-router-dom";
 import { Button, Typography } from "@mui/material";
 import BasicCard from "../../components/Card/BasicCard";
 import { Download } from "@mui/icons-material";
-
-export default function Playlist() {
+export default function Albums() {
     const { accessToken } = useAuth();
-    const { playlistId } = useParams();
-    const [playlistData, setPlaylistData] = useState();
+    const { albumId } = useParams();
+    const [albumData, setAlbumData] = useState();
 
     const fetchData = async () => {
-        const playlistParams = {
+        const albumParams = {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
                 Authorization: "Bearer " + accessToken,
             },
         };
-        let playlistUrl = `https://api.spotify.com/v1/playlists/${playlistId}`;
+        let albumUrl = `https://api.spotify.com/v1/albums/${albumId}`;
 
-        const playlistResult = await fetch(playlistUrl, playlistParams)
+        const albumResult = await fetch(albumUrl, albumParams)
             .then((response) => response.json())
-            .then((playlistResult) => {
-                console.log(playlistResult);
-                // const newData = Object.values(playlistResult)[0].items;
-                // console.log(Object.values(playlistResult)[0].items);
-                setPlaylistData(playlistResult);
+            .then((albumResult) => {
+                console.log(albumResult);
+                // const newData = Object.values(albumResult)[0].items;
+                // console.log(Object.values(albumResult)[0].items);
+                setAlbumData(albumResult);
             });
     };
     useEffect(() => {
         fetchData();
     }, []);
     return (
-        <div className="Playlist Page">
+        <div className="Albums Page">
             <img
-                src={playlistData?.images[0]?.url}
-                alt="Playlist Cover"
+                src={albumData?.images[0]?.url}
+                alt="Album Cover"
                 style={{ width: "300px", height: "300px" }}
             />
 
-            <Typography variant="h3">{playlistData?.name}</Typography>
+            <Typography variant="h3" sx={{textShadow:"0 0 4px"}}>{albumData?.name}</Typography>
             <div
                 className="buttons-container"
                 style={{
                     display: "flex",
-                    justifyContent: "end",
+                    justifyContent: "space-between",
                     alignItems: "center",
                     width: "100%",
-                    gap: "32px",
                 }}
             >
                 <Button
@@ -56,7 +54,7 @@ export default function Playlist() {
                     color="success"
                     sx={{ color: "#fff" }}
                 >
-                    Download <Download />
+                    <Download />
                 </Button>
                 <Button
                     variant="contained"
@@ -66,16 +64,16 @@ export default function Playlist() {
                     Add to Library
                 </Button>
             </div>
-            {playlistData?.tracks?.items?.map((item) => {
+            {albumData?.tracks?.items?.map((item) => {
                 return (
                     <BasicCard
-                        key={item.track.id}
-                        id={item.track.id}
-                        cover={item.track?.album.images[1]?.url}
-                        artist={item.track?.artists[0].name}
-                        title={item.track?.name}
-                        type={item.track?.type}
-                        trackUrl={item.track?.uri}
+                        key={item.id}
+                        id={item.id}
+                        cover={albumData.images[0].url}
+                        artist={item.artists[0].name}
+                        title={item.name}
+                        type={item.type}
+                        trackUrl={item.uri}
                     />
                 );
             })}
