@@ -21,23 +21,24 @@ export default function BasicCard({
     id,
 }) {
     const navigate = useNavigate();
+
     function handleClick() {
-        console.log(id);
         navigate(`/${type}/${id}`);
     }
-    // console.log(id);
+
     return (
-        <Slide in style={{ transformOrigin: "top", transitionDuration: 600 }}>
+        <Slide in direction="up" style={{ transitionDuration: 600 }}>
             <Card
                 onClick={handleClick}
                 sx={{
                     width: 1,
+                    height: "100px",
                     borderRadius: 6,
                     display: "flex",
                     justifyContent: "start",
                     alignItems: "center",
                     zIndex: "999",
-                    gap:"16px"
+                    gap: "16px",
                 }}
             >
                 <CardMedia
@@ -53,7 +54,6 @@ export default function BasicCard({
                         justifyContent: "space-evenly",
                         gap: "8px",
                         width: "calc(100% - 100px)",
-                        padding: "0 0 0 4px",
                     }}
                 >
                     {type === "track" ? (

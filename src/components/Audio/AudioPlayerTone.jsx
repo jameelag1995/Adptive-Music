@@ -24,6 +24,7 @@ import {
     PlayCircle,
     Restore,
     Share,
+    SlowMotionVideo,
     Speaker,
     Stop,
     Tune,
@@ -51,33 +52,22 @@ export default function AudioPlayerTone() {
         }
 
         reverb = new Tone.Freeverb({
-            roomSize: 0.7, // Adjust the room size
-            dampening: 2000, // Adjust the dampening
+            roomSize: 0.4, // Adjust the room size
+            dampening: 1000, // Adjust the dampening
         }).toDestination();
-
+        // player.connect(reverb);
         player.playbackRate = tempoMultiplier;
     }, []);
     const [playbackPosition, setPlaybackPosition] = useState(0);
     const [currBpm, setCurrBpm] = useState(Tone.Transport.bpm.value);
     const [isPlaying, setIsPlaying] = useState(false);
     const [change, setChange] = useState(false);
-    // useEffect(() => {
-    //     console.log(player.context.state);
-    //     return () => {
-    //         // Cleanup when the component is unmounted
-    //         Tone.Transport.stop();
-    //         player.dispose();
-    //     };
-    // }, []);
 
     const handlePlay = () => {
         if (Tone.context.state !== "running") {
             Tone.Transport.start();
         }
         player.start(undefined, playbackPosition);
-        console.log(player);
-        console.log(player.context.state);
-        console.log(Tone);
 
         setIsPlaying(true);
     };
@@ -97,15 +87,7 @@ export default function AudioPlayerTone() {
         setIsPlaying(false);
     };
     const handleIncreaseTempo = () => {
-        // console.log('incease');
-        // let currBpm = Tone.Transport.bpm.value;
-        // Tone.Transport.bpm.value *= 1.2;
-        // Tone.Transport.start();
-        // Tone.Transport.bpm.rampTo(currBpm * 2, 10);
-        // console.log(shifter);
-        // shifter.pitch = 12;
         setChange((prev) => !prev);
-        console.log("increase playbackRate");
 
         tempoMultiplier *= 1.2; // Adjust the multiplier as needed
         player.playbackRate = tempoMultiplier;
@@ -113,34 +95,18 @@ export default function AudioPlayerTone() {
     };
     const handleDecreaseTempo = () => {
         setChange((prev) => !prev);
-        console.log("decrease playbackRate");
 
         tempoMultiplier /= 1.2; // Adjust the multiplier as needed
         player.playbackRate = tempoMultiplier;
-        console.log(typeof currBpm);
-        adjustReverbForTempo(currBpm / 1.2);
+
         // player.connect(reverb);
         setCurrBpm((prevBpm) => prevBpm / 1.2);
     };
 
     function adjustReverbForTempo(tempo) {
         // Assuming tempo is in beats per minute (BPM)
-        console.log(tempo);
+        player.connect(reverb);
         // Scale roomSize based on tempo
-        const roomSize = Math.min(1, tempo / 120);
-
-        // Decrease dampening with slower tempos
-        const dampening = 3000 - (tempo - 120) * 20;
-        console.log(dampening);
-
-        console.log(reverb.dampening.value);
-        // Apply the new reverb settings
-        changeReverbSettings(roomSize, dampening);
-    }
-    function changeReverbSettings(roomSize, dampening) {
-        // Adjust reverb settings
-        reverb.roomSize.value = roomSize;
-        reverb.dampening = dampening;
     }
 
     return (
@@ -221,7 +187,14 @@ export default function AudioPlayerTone() {
                                     <CompressorEffect player={player} />
                                     <ChorusEffect player={player} />
                                     <PitchShiftEffect player={player} />
-                                    <SlowWithReverb player={player} />
+                                    <Button
+                                        variant="outlined"
+                                        onClick={() =>
+                                            adjustReverbForTempo(currBpm / 1.2)
+                                        }
+                                    >
+                                        <SlowMotionVideo />
+                                    </Button>
                                 </div>
                             </Slide>
                         )}
@@ -229,11 +202,11 @@ export default function AudioPlayerTone() {
                     </div>
                     {/* track timeline */}
 
-                    <Typography variant="h6">{`Current Duration after effect: ${(
+                    {/* <Typography variant="h6">{`Current Duration after effect: ${(
                         player?.buffer.duration /
                         player?.playbackRate /
                         60
-                    ).toFixed(2)} min`}</Typography>
+                    ).toFixed(2)} min`}</Typography> */}
                     <div className="player-buttons">
                         <FastRewind sx={{ width: "64px", height: "64px" }} />
                         {isPlaying ? (

@@ -15,10 +15,9 @@ import { useNavigate } from "react-router-dom";
 export default function TestCard({ title, artist, cover, type, trackUrl, id }) {
     const navigate = useNavigate();
     function handleClick() {
-        console.log(id);
         navigate(`/test/${id}`);
     }
-    // console.log(id);
+
     return (
         <Slide
             in
@@ -33,6 +32,7 @@ export default function TestCard({ title, artist, cover, type, trackUrl, id }) {
                 onClick={handleClick}
                 sx={{
                     width: 1,
+                    height:"100px",
                     borderRadius: 6,
                     display: "flex",
                     justifyContent: "start",
@@ -54,7 +54,7 @@ export default function TestCard({ title, artist, cover, type, trackUrl, id }) {
                         justifyContent: "space-evenly",
                         gap: "8px",
                         width: "calc(100% - 100px)",
-                        padding: "0 0 0 4px",
+                        height: "100px",
                     }}
                 >
                     {type === "track" ? (

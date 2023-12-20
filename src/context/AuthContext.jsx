@@ -52,7 +52,6 @@ export function AuthProvider({ children }) {
     }, []);
     const navigate = useNavigate();
     function update(newDisplayName) {
-        console.log(auth.currentUser);
         return updateProfile(auth.currentUser, {
             displayName: newDisplayName,
         })
@@ -62,7 +61,7 @@ export function AuthProvider({ children }) {
     async function addUserToDataBase(newUser) {
         try {
             const docRef = await addDoc(collection(db, "users"), newUser);
-            console.log("Document written with ID: ", docRef.id);
+
             setCurrentUser(newUser);
         } catch (error) {
             console.error("Error adding user to database: ", error);
@@ -71,8 +70,6 @@ export function AuthProvider({ children }) {
     async function register(email, password, displayName) {
         return createUserWithEmailAndPassword(auth, email, password).then(
             (userCredentials) => {
-                console.log(auth.currentUser);
-                console.log(userCredentials);
                 updateProfile(auth.currentUser, {
                     displayName: displayName,
                 })
@@ -100,12 +97,11 @@ export function AuthProvider({ children }) {
         const querySnapshot = await getDocs(collection(db, "users"));
         const newData = [];
         querySnapshot.forEach((doc) => {
-            console.log(`${doc.id} => ${doc.data()}`);
             newData.push(doc.data());
         });
-        console.log(newData);
+
         const loggedUser = newData.find((user) => user.userId === loggedUserId);
-        console.log(loggedUser);
+
         setCurrentUser(loggedUser);
     }
     function login(email, password) {

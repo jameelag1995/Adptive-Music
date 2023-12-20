@@ -2,11 +2,17 @@ import { Paper, Slide, Typography } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function PlaylistCard({ name, img, id, description = "" }) {
+export default function PlaylistCard({
+    name,
+    img,
+    id,
+    description = "",
+    type = "playlist",
+}) {
     const navigate = useNavigate();
     const handleClick = (e) => {
-        console.log(id);
-        navigate(`/playlist/${id}`);
+       
+        navigate(`/${type}/${id}`);
     };
     return (
         <Slide in direction="up" style={{ transitionDuration: 600 }}>
@@ -33,7 +39,7 @@ export default function PlaylistCard({ name, img, id, description = "" }) {
                         right: "10px",
                         fontWeight: "600",
                         textShadow: "0 0 5px black",
-                        zIndex:3
+                        zIndex: 3,
                     }}
                 >
                     {name}

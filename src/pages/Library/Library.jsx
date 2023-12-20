@@ -39,23 +39,23 @@ export default function Library() {
     const [addingPlaylist, setAddingPlaylist] = useState(false);
     const [playlistsData, setPlaylistsData] = useState([]);
     const handleAddPlaylist = () => {
-        console.log("clicked");
         setAddingPlaylist(true);
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("add playlist clicked");
+
         const newData = {
             title: titleRef.current.value,
             cover: "https://images.unsplash.com/photo-1603048588665-791ca8aea617?q=80&w=1660&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             description: descriptionRef.current.value,
             userId: auth.currentUser.uid,
+            id: 1,
+            type: "myplaylist",
         };
         setPlaylistsData([...playlistsData, newData]);
         setAddingPlaylist(false);
         try {
             const docRef = await addDoc(collection(db, "playlists"), newData);
-            console.log("document written with ID: ", docRef.id);
         } catch (error) {
             console.log("Error Adding Playlist: ", error);
         }
@@ -65,11 +65,10 @@ export default function Library() {
             const querySnapshot = await getDocs(collection(db, "playlists"));
             const newData = [];
             querySnapshot.forEach((doc) => {
-                console.log(`${doc.id} => ${doc.data()}`);
                 if (doc.data().userId === auth.currentUser.uid)
                     newData.push(doc.data());
             });
-            console.log(newData);
+
             setPlaylistsData(newData);
         };
         fetchData();
@@ -114,6 +113,8 @@ export default function Library() {
                                 name={event.title}
                                 img={event.cover}
                                 description={event.description}
+                                id={event.id}
+                                type={event.type}
                             />
                         );
                     })

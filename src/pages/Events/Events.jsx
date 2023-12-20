@@ -55,12 +55,11 @@ export default function Events() {
     const ticketsUrlRef = useRef();
     const navigate = useNavigate();
     const handleAddEvent = () => {
-        console.log("clicked");
         setAddingEvent(true);
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("add event clicked");
+
         const newEvent = {
             title: titleRef.current.value,
             lineup: lineupRef.current.value,
@@ -75,7 +74,6 @@ export default function Events() {
         setAddingEvent(false);
         try {
             const docRef = await addDoc(collection(db, "events"), newEvent);
-            console.log("document written with ID: ", docRef.id);
         } catch (error) {
             console.log("Error Adding Event: ", error);
         }
@@ -85,11 +83,10 @@ export default function Events() {
             const querySnapshot = await getDocs(collection(db, "events"));
             const newData = [];
             querySnapshot.forEach((doc) => {
-                console.log(`${doc.id} => ${doc.data()}`);
                 newData.push(doc.data());
             });
-            console.log(newData);
-            setEventsData(newData)
+
+            setEventsData(newData);
         };
         fetchData();
     }, []);

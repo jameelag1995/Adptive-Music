@@ -19,7 +19,7 @@ function emailValidation(mailInput, setRegisterError) {
     const re = new RegExp(
         /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     );
-    // console.log(mailInput);
+
     if (!re.test(mailInput)) {
         setRegisterError("Invalid Email");
         return false;
@@ -28,19 +28,6 @@ function emailValidation(mailInput, setRegisterError) {
     return true;
 }
 
-// function emailExists(mailInput, data) {
-//     // console.log(data);
-//     const emailsArr = data.map((user) => user.email);
-//     // console.log("emails Arr", emailsArr);
-//     const alreadyExists = emailsArr.includes(mailInput);
-//     // console.log("email already exists", alreadyExists);
-//     if (alreadyExists) {
-//         // setRegisterError("Email already Exists");
-//         return false;
-//     }
-//     // setRegisterError("email does not exist");
-//     return true;
-// }
 function passwordValidation(passInput, setRegisterError) {
     const re = new RegExp(
         "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
@@ -98,7 +85,6 @@ export default function Register() {
                     passwordInput.current.value,
                     fullNameRef.current.value
                 );
-                
 
                 navigate("/dashboard");
             } catch (error) {
@@ -107,7 +93,6 @@ export default function Register() {
         }
         setLoading(false);
     };
-    
 
     return (
         <div className="login-form-container">

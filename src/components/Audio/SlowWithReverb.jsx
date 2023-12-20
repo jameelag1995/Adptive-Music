@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import * as Tone from "tone";
 
 const reverb = new Tone.Freeverb({
-    roomSize: 0.8, // Adjust the room size
+    roomSize: 0.5, // Adjust the room size
     dampening: 3000, // Adjust the dampening
 }).toDestination();
 export default function Reverb({ player }) {

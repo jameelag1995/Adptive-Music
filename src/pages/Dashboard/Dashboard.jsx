@@ -32,60 +32,20 @@ export default function Dashboard() {
             },
         };
 
-        // setTimeout(async () => {
-        //     let genreUrl =
-        //         "https://api.spotify.com/v1/recommendations/available-genre-seeds";
-        //     try {
-        //         const genreResult = await fetch(genreUrl, fetchParams);
-        //         if (!genreResult.ok) {
-        //             throw new Error("failed fetching data");
-        //         }
-        //         genreResult
-        //             .then((response) => response.json())
-        //             .then((genre) => {
-        //                 // console.log(genre);
-        //                 const newData = Object.values(genre)[0];
-        //                 console.log(newData);
-        //                 setData(newData);
-        //                 return genre;
-        //             });
-        //     } catch (error) {
-        //         console.log(error);
-        //     }
-        // }, 2000);
-
         setTimeout(async () => {
             let playlistsUrl =
                 "https://api.spotify.com/v1/browse/featured-playlists?country=US&limit=8";
             const playlistsResult = await fetch(playlistsUrl, fetchParams)
                 .then((response) => response.json())
                 .then((playlists) => {
-                    console.log(playlists.playlists.items);
-                    // const newData = Object.values(playlists)[0];
-                    // console.log("playlists",newData);
                     setPlaylists(playlists.playlists.items);
                     return playlists;
                 });
         }, 1000);
     }, [accessToken]);
-    // if (!playlists) {
-    //     return (
-    //         <div className="equalizers-container">
-    //             <div className="equalizers">
-    //                 <Equalizer />
-    //                 <Equalizer />
-    //                 <Equalizer />
-    //             </div>
-    //         </div>
-    //     );
-    // }
+
     return (
         <div className="Dashboard Page">
-            {/* <Link to="/auth/login">
-                <Button variant="outlined" color="error" onClick={logout}>
-                    Logout
-                </Button>
-            </Link> */}
 
             <Search accessToken={accessToken} setIsSearching={setIsSearching} />
             {!isSearching && (
@@ -116,24 +76,6 @@ export default function Dashboard() {
                             />
                         );
                     })}
-                    {/* {data?.map((genre, index) => {
-                        return (
-                            <Paper
-                                sx={{
-                                    width: "30%",
-                                    height: "100px",
-                                    display: "grid",
-                                    placeItems: "center",
-                                    textAlign: "center",
-                                    p: 2,
-                                }}
-                                key={index}
-                                elevation={3}
-                            >
-                                {genre}
-                            </Paper>
-                        );
-                    })} */}
                 </div>
             )}
         </div>

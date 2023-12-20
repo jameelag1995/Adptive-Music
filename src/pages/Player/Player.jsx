@@ -36,19 +36,19 @@ export default function Player() {
             const response = await fetch(trackUrl, trackParams);
             if (!response.ok) throw new Error("fetch failed ");
             const result = await response.json();
-            console.log(result);
+
             setTrackData(result);
         } catch (error) {
             console.log(error.message);
             navigate("/notfound");
         }
     };
-    console.log(currentUser);
+
     useEffect(() => {
         fetchData();
     }, []);
     return (
-        <Slide in direction="up">
+        <Slide in direction="up" style={{ transitionDuration: 600 }}>
             <div className="Player Page">
                 <ArrowBack
                     sx={{

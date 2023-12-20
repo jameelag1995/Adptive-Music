@@ -22,14 +22,12 @@ export default function Search({ accessToken, setIsSearching }) {
     const [data, setData] = useState();
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
-    console.log(accessToken);
+    
     const handleCategoryClick = (e, category) => {
         search(e, category);
     };
     async function search(e, category = "track") {
-        console.log("searching for ", searchInput);
         if (!searchInput) {
-            console.log("empty search");
             setIsSearching((prev) => !prev);
             setData([]);
             return;
@@ -44,7 +42,6 @@ export default function Search({ accessToken, setIsSearching }) {
                 Authorization: "Bearer " + accessToken,
             },
         };
-        console.log(category);
         let searchUrl =
             "https://api.spotify.com/v1/search?q=" +
             searchInput +
@@ -55,22 +52,10 @@ export default function Search({ accessToken, setIsSearching }) {
                 .then((response) => response.json())
                 .then((searchData) => {
                     const newData = Object.values(searchData)[0].items;
-                    console.log(Object.values(searchData)[0].items);
                     setData(newData);
                     return searchData;
                 });
         }, 600);
-        // console.log("artist id is :", artistId);
-        // get request with artist id grab all albums from that artist
-        // const albums = await fetch(
-        //     `https://api.spotify.com/v1/albums/${artistId}?market=US`,
-        //     searchParams
-        // )
-        //     .then((response) => response.json())
-        //     .then((data) => {
-        //         console.log(data);
-        //         setData(data)});
-        // display those albums to the user
     }
 
     return (

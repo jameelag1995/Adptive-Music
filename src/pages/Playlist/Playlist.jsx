@@ -4,6 +4,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Button, Typography } from "@mui/material";
 import BasicCard from "../../components/Card/BasicCard";
 import { ArrowBack, Download } from "@mui/icons-material";
+import { auth, db } from "../../Firebase";
+import { addDoc, collection } from "firebase/firestore";
 
 export default function Playlist() {
     const { accessToken } = useAuth();
@@ -29,22 +31,21 @@ export default function Playlist() {
             console.log(error.message);
             navigate("/notfound");
         }
-        // const playlistResult = await fetch(playlistUrl, playlistParams)
-        //     .then((response) => {
-        //         if (!response.ok) throw new Error("fetch failed");
-
-        //         return response.json();
-        //     })
-        //     .then((playlistResult) => {
-        //         console.log(playlistResult);
-        //         // const newData = Object.values(playlistResult)[0].items;
-        //         // console.log(Object.values(playlistResult)[0].items);
-        //         setPlaylistData(playlistResult);
-        //     })
-        //     .catch((err) => {
-        //         console.log(err.message);
-        //         navigate("/notfound");
-        //     });
+    };
+    const handleAddToLibrary = async () => {
+        const newData = {
+            title: playlistData?.name,
+            cover: playlistData?.images[0]?.url,
+            description: "",
+            id: playlistData?.id,
+            type: playlistData?.type,
+            userId: auth.currentUser.uid,
+        };
+        try {
+            const docRef = await addDoc(collection(db, "playlists"), newData);
+        } catch (error) {
+            console.log("Error Adding Album: ", error);
+        }
     };
     useEffect(() => {
         fetchData();
@@ -86,6 +87,7 @@ export default function Playlist() {
                     Download <Download />
                 </Button>
                 <Button
+                    onClick={handleAddToLibrary}
                     variant="contained"
                     color="success"
                     sx={{ color: "#fff" }}
