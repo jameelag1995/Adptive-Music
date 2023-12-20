@@ -52,7 +52,7 @@ export default function BasicCard({
                         alignItems: "center",
                         justifyContent: "space-evenly",
                         gap: "8px",
-                        width: "calc(100%-100px)",
+                        width: "calc(100% - 100px)",
                         padding: "0 0 0 4px",
                     }}
                 >

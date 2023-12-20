@@ -53,7 +53,7 @@ export default function TestCard({ title, artist, cover, type, trackUrl, id }) {
                         alignItems: "center",
                         justifyContent: "space-evenly",
                         gap: "8px",
-                        width: "calc(100%-100px)",
+                        width: "calc(100% - 100px)",
                         padding: "0 0 0 4px",
                     }}
                 >

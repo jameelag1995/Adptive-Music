@@ -23,9 +23,14 @@ export default function Profile() {
     function handleClick() {
         if (isEditingProfile === false) setIsEditingProfile(true);
         else {
-            currentUser.displayName = newDisplayNameRef.current.value;
-            update(newDisplayNameRef.current.value);
-            setIsEditingProfile(false);
+            if (newDisplayNameRef.current.value === "") {
+                setIsEditingProfile(false);
+                return;
+            } else {
+                currentUser.displayName = newDisplayNameRef.current.value;
+                update(newDisplayNameRef.current.value);
+                setIsEditingProfile(false);
+            }
         }
     }
     const [playlists, setPlaylists] = useState();
@@ -63,18 +68,17 @@ export default function Profile() {
             <Button
                 variant="contained"
                 color="error"
-                sx={{ position: "absolute", top: "16px", left: "16px" }}
+                sx={{ position: "absolute", top: "8px", left: "8px" }}
                 onClick={logout}
             >
                 Logout
             </Button>
             <Avatar sx={{ width: "64px", height: "64px" }}>
-                {displayNameToLetters()}
+                {currentUser?.displayName && displayNameToLetters()}
             </Avatar>
             <Typography variant="h4">
                 {currentUser?.displayName
-                    ? currentUser?.displayName
-                    : nameFromLocal}
+                    && currentUser?.displayName}
             </Typography>
             <Button variant="contained" fullWidth onClick={handleClick}>
                 {isEditingProfile ? "Update Profile" : "Edit Profile"}

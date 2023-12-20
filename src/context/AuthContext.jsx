@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { auth } from "../Firebase";
+import { auth, db } from "../Firebase";
+import { collection, addDoc, getDocs } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import {
     signInWithEmailAndPassword,
@@ -58,24 +59,67 @@ export function AuthProvider({ children }) {
             .then(() => setCurrentUser(auth.currentUser))
             .catch((err) => console.log("error updating user"));
     }
-    function register(email, password, displayName) {
+    async function addUserToDataBase(newUser) {
+        try {
+            const docRef = await addDoc(collection(db, "users"), newUser);
+            console.log("Document written with ID: ", docRef.id);
+            setCurrentUser(newUser);
+        } catch (error) {
+            console.error("Error adding user to database: ", error);
+        }
+    }
+    async function register(email, password, displayName) {
         return createUserWithEmailAndPassword(auth, email, password).then(
             (userCredentials) => {
-                updateProfile(userCredentials, {
+                console.log(auth.currentUser);
+                console.log(userCredentials);
+                updateProfile(auth.currentUser, {
                     displayName: displayName,
-                });
-                // userCredentials.user.displayName = displayName;
-                // window.localStorage.setItem("displayName", displayName);
+                })
+                    .then(() => {
+                        setCurrentUser(auth.currentUser);
+                        const newUser = {
+                            displayName: auth.currentUser.displayName,
+                            email: auth.currentUser.email,
+                            userId: auth.currentUser.uid,
+                            library: {
+                                playlists: [],
+                                albums: [],
+                                likedSongs: [],
+                            },
+                        };
+                        addUserToDataBase(newUser);
+                    })
+                    .catch((err) => console.log("error registering user"));
             }
         );
+        // userCredentials.user.displayName = displayName;
+        // window.localStorage.setItem("displayName", displayName);
     }
-
+    async function getUserFromDatabase(loggedUserId) {
+        const querySnapshot = await getDocs(collection(db, "users"));
+        const newData = [];
+        querySnapshot.forEach((doc) => {
+            console.log(`${doc.id} => ${doc.data()}`);
+            newData.push(doc.data());
+        });
+        console.log(newData);
+        const loggedUser = newData.find((user) => user.userId === loggedUserId);
+        console.log(loggedUser);
+        setCurrentUser(loggedUser);
+    }
     function login(email, password) {
-        return signInWithEmailAndPassword(auth, email, password);
+        return signInWithEmailAndPassword(auth, email, password)
+            .then((userCredentials) => {
+                getUserFromDatabase(userCredentials.user.uid);
+            })
+            .catch((error) => {
+                console.log("failed to login", error.message);
+            });
     }
     function logout() {
         window.localStorage.clear();
-        navigate("/auth/login");
+        navigate("/auth/");
         return signOut(auth);
     }
     function resetPassword(email) {

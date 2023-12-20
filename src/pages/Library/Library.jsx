@@ -100,7 +100,7 @@ export default function Library() {
                     }}
                 >
                     <Close
-                        onClick={() => setAddingEvent(false)}
+                        onClick={() => setAddingPlaylist(false)}
                         sx={{
                             position: "absolute",
                             right: "10px",
@@ -136,7 +136,6 @@ export default function Library() {
                             fullWidth
                         />
 
-                        <ImageUploadCard coverRef={coverRef} />
                         <Button variant="contained" onClick={handleSubmit}>
                             Add Playlist
                         </Button>

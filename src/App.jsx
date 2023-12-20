@@ -145,15 +145,6 @@ function App() {
                         }
                     />
                 </Routes>
-
-                {/* <h1>Welcome To My App</h1>
-                    <Button
-                    variant="contained"
-                    style={{ backgroundColor: "black" }}
-                    >
-                    contained button
-                    </Button>
-                  <BasicModal /> */}
             </AuthProvider>
         </ThemeProvider>
     );

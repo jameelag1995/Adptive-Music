@@ -7,6 +7,7 @@ import {
     signInWithEmailAndPassword,
 } from "firebase/auth";
 import { getDatabase } from "firebase/database";
+import { getFirestore } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -27,4 +28,5 @@ const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
 // connectAuthEmulator(auth,"http://localhost:9099")
-export const db = getDatabase(app);
+// export const db = getDatabase(app);
+export const db = getFirestore(app);

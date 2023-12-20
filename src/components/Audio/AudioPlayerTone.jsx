@@ -3,7 +3,7 @@ import * as Tone from "tone";
 import "./AudioPlayer.css";
 // import songurl from "../data/qafeledrill42.mp3";
 // import songUrl from "../data/efhamne.mp3";
-import aram from "../../assets/tracks/burnit.wav";
+import aram from "../../assets/tracks/burnit.mp3";
 // import { getTempo } from "./getTempo";
 import edSheeran from "../../assets/tracks/Ed_Sheeran_Shape_of_You.mp3";
 import CompressorEffect from "./CompressorEffect";
@@ -51,8 +51,8 @@ export default function AudioPlayerTone() {
         }
 
         reverb = new Tone.Freeverb({
-            roomSize: 0.8, // Adjust the room size
-            dampening: 3000, // Adjust the dampening
+            roomSize: 0.7, // Adjust the room size
+            dampening: 2000, // Adjust the dampening
         }).toDestination();
 
         player.playbackRate = tempoMultiplier;

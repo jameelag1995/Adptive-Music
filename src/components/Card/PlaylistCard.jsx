@@ -29,7 +29,7 @@ export default function PlaylistCard({ name, img, id, description = "" }) {
                     color="white"
                     sx={{
                         position: "absolute",
-                        top: "10px",
+                        bottom: "10px",
                         right: "10px",
                         fontWeight: "600",
                         textShadow: "0 0 5px black",

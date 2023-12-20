@@ -98,6 +98,7 @@ export default function Register() {
                     passwordInput.current.value,
                     fullNameRef.current.value
                 );
+                
 
                 navigate("/dashboard");
             } catch (error) {

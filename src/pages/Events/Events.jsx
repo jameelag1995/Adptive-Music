@@ -1,5 +1,5 @@
 import { Add, ArrowBack, Close, HdrPlus } from "@mui/icons-material";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import BottomNavBar from "../../components/BottomNavBar/BottomNavBar";
 import {
     Button,
@@ -14,6 +14,8 @@ import {
 import dayjs from "dayjs";
 import "./Events.css";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { db } from "../../Firebase";
+import { collection, addDoc, getDocs } from "firebase/firestore";
 import {
     DateField,
     DatePicker,
@@ -27,6 +29,7 @@ import BasicCard from "../../components/Card/BasicCard";
 import EventCard from "../../components/Card/EventCard";
 import { musicalEvents } from "../../data/data";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 const eventDemo = {
     title: "New Years Party ",
     lineup: "travis scott, drake, j.cole, kendrick lamar",
@@ -41,6 +44,7 @@ export default function Events() {
     const [eventsData, setEventsData] = useState(musicalEvents);
     const [addingEvent, setAddingEvent] = useState(false);
     const [isArtist, setIsArtist] = useState(false);
+    const { currentUser } = useAuth();
     const titleRef = useRef();
     const coverRef = useRef();
     const descriptionRef = useRef();
@@ -54,24 +58,41 @@ export default function Events() {
         console.log("clicked");
         setAddingEvent(true);
     };
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         console.log("add event clicked");
-        setEventsData([
-            ...eventsData,
-            {
-                title: titleRef.current.value,
-                lineup: lineupRef.current.value,
-                date: dateRef.current.value,
-                time: timeRef.current.value,
-                ticketUrl: ticketsUrlRef.current.value,
-                cover: coverRef.current.value,
-                description: descriptionRef.current.value,
-                location: locationRef.current.value,
-            },
-        ]);
+        const newEvent = {
+            title: titleRef.current.value,
+            lineup: lineupRef.current.value,
+            date: dateRef.current.value,
+            time: timeRef.current.value,
+            ticketUrl: ticketsUrlRef.current.value,
+            description: descriptionRef.current.value,
+            location: locationRef.current.value,
+            userId: currentUser.uid,
+        };
+        setEventsData([...eventsData, newEvent]);
         setAddingEvent(false);
+        try {
+            const docRef = await addDoc(collection(db, "events"), newEvent);
+            console.log("document written with ID: ", docRef.id);
+        } catch (error) {
+            console.log("Error Adding Event: ", error);
+        }
     };
+    useEffect(() => {
+        const fetchData = async () => {
+            const querySnapshot = await getDocs(collection(db, "events"));
+            const newData = [];
+            querySnapshot.forEach((doc) => {
+                console.log(`${doc.id} => ${doc.data()}`);
+                newData.push(doc.data());
+            });
+            console.log(newData);
+            setEventsData(newData);
+        };
+        fetchData();
+    }, []);
     return (
         <div className="Events Page">
             <ArrowBack
@@ -205,7 +226,6 @@ export default function Events() {
                             maxRows={4}
                             fullWidth
                         />
-                        <ImageUploadCard coverRef={coverRef} />
                         <Button variant="contained" onClick={handleSubmit}>
                             Add Event
                         </Button>
