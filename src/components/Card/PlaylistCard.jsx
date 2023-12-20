@@ -15,8 +15,8 @@ export default function PlaylistCard({ name, img, id, description = "" }) {
                 elevation={3}
                 sx={{
                     position: "relative",
-                    width: "30%",
-                    height: "300px",
+                    width: "40%",
+                    height: "200px",
                     display: "grid",
                     placeItems: "center",
                     textAlign: "center",
@@ -33,6 +33,7 @@ export default function PlaylistCard({ name, img, id, description = "" }) {
                         right: "10px",
                         fontWeight: "600",
                         textShadow: "0 0 5px black",
+                        zIndex:3
                     }}
                 >
                     {name}

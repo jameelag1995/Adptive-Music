@@ -41,7 +41,7 @@ const eventDemo = {
     location: "New York",
 };
 export default function Events() {
-    const [eventsData, setEventsData] = useState(musicalEvents);
+    const [eventsData, setEventsData] = useState([]);
     const [addingEvent, setAddingEvent] = useState(false);
     const [isArtist, setIsArtist] = useState(false);
     const { currentUser } = useAuth();
@@ -89,7 +89,7 @@ export default function Events() {
                 newData.push(doc.data());
             });
             console.log(newData);
-            setEventsData(newData);
+            setEventsData(newData)
         };
         fetchData();
     }, []);

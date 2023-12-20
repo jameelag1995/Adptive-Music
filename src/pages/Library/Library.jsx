@@ -1,6 +1,19 @@
 import { Add, ArrowBack, Close } from "@mui/icons-material";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { auth, db } from "../../Firebase";
+import {
+    setDoc,
+    doc,
+    updateDoc,
+    Firestore,
+    query,
+    collection,
+    where,
+    getDoc,
+    getDocs,
+    addDoc,
+} from "firebase/firestore";
 import "./Library.css";
 import {
     Button,
@@ -16,30 +29,52 @@ import {
     LocalizationProvider,
     TimePicker,
 } from "@mui/x-date-pickers";
+import { useAuth } from "../../context/AuthContext";
 export default function Library() {
     const navigate = useNavigate();
     const titleRef = useRef();
     const coverRef = useRef();
     const descriptionRef = useRef();
+    const { currentUser } = useAuth();
     const [addingPlaylist, setAddingPlaylist] = useState(false);
-    const [playlistsData, setPlaylistsData] = useState();
+    const [playlistsData, setPlaylistsData] = useState([]);
     const handleAddPlaylist = () => {
         console.log("clicked");
         setAddingPlaylist(true);
     };
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         console.log("add playlist clicked");
-        setPlaylistsData([
-            ...playlistsData,
-            {
-                title: titleRef.current.value,
-                cover: coverRef.current.value,
-                description: descriptionRef.current.value,
-            },
-        ]);
+        const newData = {
+            title: titleRef.current.value,
+            cover: "https://images.unsplash.com/photo-1603048588665-791ca8aea617?q=80&w=1660&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            description: descriptionRef.current.value,
+            userId: auth.currentUser.uid,
+        };
+        setPlaylistsData([...playlistsData, newData]);
         setAddingPlaylist(false);
+        try {
+            const docRef = await addDoc(collection(db, "playlists"), newData);
+            console.log("document written with ID: ", docRef.id);
+        } catch (error) {
+            console.log("Error Adding Playlist: ", error);
+        }
     };
+    useEffect(() => {
+        const fetchData = async () => {
+            const querySnapshot = await getDocs(collection(db, "playlists"));
+            const newData = [];
+            querySnapshot.forEach((doc) => {
+                console.log(`${doc.id} => ${doc.data()}`);
+                if (doc.data().userId === auth.currentUser.uid)
+                    newData.push(doc.data());
+            });
+            console.log(newData);
+            setPlaylistsData(newData);
+        };
+        fetchData();
+    }, []);
+
     return (
         <div className="Library Page">
             <ArrowBack
@@ -76,7 +111,7 @@ export default function Library() {
                         return (
                             <PlaylistCard
                                 key={index}
-                                title={event.title}
+                                name={event.title}
                                 img={event.cover}
                                 description={event.description}
                             />
@@ -89,7 +124,7 @@ export default function Library() {
                 <Paper
                     sx={{
                         zIndex: 3,
-                        width: 1,
+                        width: "100%",
                         maxWidth: "600px",
                         position: "absolute",
                         display: "flex",
