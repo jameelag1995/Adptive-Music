@@ -42,13 +42,13 @@ export default function Events() {
     const [addingEvent, setAddingEvent] = useState(false);
     const [isArtist, setIsArtist] = useState(false);
     const titleRef = useRef();
+    const coverRef = useRef();
+    const descriptionRef = useRef();
     const locationRef = useRef();
     const lineupRef = useRef();
     const dateRef = useRef();
     const timeRef = useRef();
     const ticketsUrlRef = useRef();
-    const coverRef = useRef();
-    const descriptionRef = useRef();
     const navigate = useNavigate();
     const handleAddEvent = () => {
         console.log("clicked");

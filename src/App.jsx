@@ -26,6 +26,7 @@ import Playlist from "./pages/Playlist/Playlist";
 import Albums from "./pages/Albums/Albums";
 import NotFound from "./pages/NotFound/NotFound";
 import Player from "./pages/Player/Player";
+import AudioPlayerTone from "./components/Audio/AudioPlayerTone";
 
 function App() {
     const [modeColor, setModeColor] = useState("dark");
@@ -121,6 +122,15 @@ function App() {
                         element={
                             <>
                                 <Player />
+                                <BottomNavBar />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="/test/:trackId"
+                        element={
+                            <>
+                                <AudioPlayerTone />
                                 <BottomNavBar />
                             </>
                         }

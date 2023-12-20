@@ -48,26 +48,26 @@ export default function Player() {
         fetchData();
     }, []);
     return (
-        <Slide in style={{transitionDuration: 600 }} direction="up" mountOnEnter unmountOnExit>
-            <ArrowBack
-                sx={{
-                    width: "40px",
-                    height: "40px",
-                    position: "absolute",
-                    left: "8px",
-                    top: "8px",
-                }}
-                onClick={() => navigate(-1)}
-            />
+        <Slide in direction="up">
             <div className="Player Page">
+                <ArrowBack
+                    sx={{
+                        width: "40px",
+                        height: "40px",
+                        position: "absolute",
+                        left: "8px",
+                        top: "8px",
+                    }}
+                    onClick={() => navigate(-1)}
+                />
                 <img
-                    src={trackData?.album.images[0].url}
-                    alt="track cover"
                     style={{
                         width: "400px",
                         height: "400px",
                         borderRadius: "6px",
                     }}
+                    src={trackData?.album.images[0].url}
+                    alt="track cover"
                 />
                 <div className="track-info">
                     <Typography

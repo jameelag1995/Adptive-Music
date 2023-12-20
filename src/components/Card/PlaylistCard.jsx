@@ -2,20 +2,20 @@ import { Paper, Slide, Typography } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function PlaylistCard({ name, img, id }) {
+export default function PlaylistCard({ name, img, id, description = "" }) {
     const navigate = useNavigate();
     const handleClick = (e) => {
         console.log(id);
         navigate(`/playlist/${id}`);
     };
     return (
-        <Slide in style={{ transformOrigin: "top", transitionDuration: 600 }}>
+        <Slide in direction="up" style={{ transitionDuration: 600 }}>
             <Paper
                 onClick={handleClick}
                 elevation={3}
                 sx={{
                     position: "relative",
-                    width: "40%",
+                    width: "30%",
                     height: "300px",
                     display: "grid",
                     placeItems: "center",

@@ -1,0 +1,32 @@
+.Player {
+    justify-content: space-between;
+}
+.track-info {
+    width: 100%;
+}
+.extra-buttons {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.bottom-buttons {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.playing-on {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.Player img {
+}
+.filter-btns-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
