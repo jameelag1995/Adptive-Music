@@ -2,6 +2,7 @@
     justify-content: start;
     position: relative;
     text-align: center;
+    min-height: 100vh !important;
 }
 .Welcome .equalizers {
     display: flex;
