@@ -101,6 +101,8 @@ export default function Profile() {
                     return (
                         <PlaylistCard
                             key={playlist.id}
+                            id={playlist.id}
+                            type={playlist.type}
                             img={playlist.images[0].url}
                             name={""}
                         />
