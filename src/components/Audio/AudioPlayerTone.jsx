@@ -12,7 +12,7 @@ import PitchShiftEffect from "./PitchShiftEffect";
 import SlowWithReverb from "./SlowWithReverb";
 
 import { useNavigate, useParams } from "react-router-dom";
-import { Button, Slide, Typography } from "@mui/material";
+import { Button, Slide, Tooltip, Typography } from "@mui/material";
 import {
     AddToPhotos,
     ArrowBack,
@@ -165,36 +165,55 @@ export default function AudioPlayerTone() {
                                 <div className="filter-btns-container">
                                     {/* <Button onClick={handlePlay}>Play</Button>
                                 <Button onClick={handlePause}>Pause</Button> */}
-                                    <Button
-                                        variant="outlined"
-                                        onClick={handleStop}
+                                    <Tooltip title="Stop" placement="top">
+                                        <Button
+                                            variant="outlined"
+                                            onClick={handleStop}
+                                        >
+                                            <Stop />
+                                        </Button>
+                                    </Tooltip>
+                                    <Tooltip
+                                        title="Decrease Tempo"
+                                        placement="top"
                                     >
-                                        <Stop />
-                                    </Button>
+                                        <Button
+                                            variant="outlined"
+                                            onClick={handleDecreaseTempo}
+                                        >
+                                            <Restore />
+                                        </Button>
+                                    </Tooltip>
+                                    <Tooltip
+                                        title="Increase Tempo"
+                                        placement="top"
+                                    >
+                                        <Button
+                                            variant="outlined"
+                                            onClick={handleIncreaseTempo}
+                                        >
+                                            <Update />
+                                        </Button>
+                                    </Tooltip>
 
-                                    <Button
-                                        variant="outlined"
-                                        onClick={handleDecreaseTempo}
-                                    >
-                                        <Restore />
-                                    </Button>
-                                    <Button
-                                        variant="outlined"
-                                        onClick={handleIncreaseTempo}
-                                    >
-                                        <Update />
-                                    </Button>
                                     <CompressorEffect player={player} />
+
                                     <ChorusEffect player={player} />
+
                                     <PitchShiftEffect player={player} />
-                                    <Button
-                                        variant="outlined"
-                                        onClick={() =>
-                                            adjustReverbForTempo(currBpm / 1.2)
-                                        }
-                                    >
-                                        <SlowMotionVideo />
-                                    </Button>
+
+                                    <Tooltip title="Reverb" placement="top">
+                                        <Button
+                                            variant="outlined"
+                                            onClick={() =>
+                                                adjustReverbForTempo(
+                                                    currBpm / 1.2
+                                                )
+                                            }
+                                        >
+                                            <SlowMotionVideo />
+                                        </Button>
+                                    </Tooltip>
                                 </div>
                             </Slide>
                         )}

@@ -1,5 +1,5 @@
 import { GraphicEq } from "@mui/icons-material";
-import { Button } from "@mui/material";
+import { Button, Tooltip } from "@mui/material";
 import React, { useState } from "react";
 import * as Tone from "tone";
 const compressor = new Tone.Compressor().toDestination();
@@ -21,11 +21,11 @@ const CompressorEffect = ({ player }) => {
     };
 
     return (
-        <div>
+        <Tooltip title="Compressor" placement="top">
             <Button variant="outlined" onClick={handleButtonClick}>
                 <GraphicEq />
             </Button>
-        </div>
+        </Tooltip>
     );
 };
 

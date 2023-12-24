@@ -1,5 +1,5 @@
 import { SurroundSound, VolumeUp } from "@mui/icons-material";
-import { Button } from "@mui/material";
+import { Button, Tooltip } from "@mui/material";
 import React, { useState } from "react";
 import * as Tone from "tone";
 // Create a Chorus effect
@@ -21,11 +21,11 @@ const ChorusEffect = ({ player }) => {
     };
 
     return (
-        <div>
+        <Tooltip title="Chorus" placement="top">
             <Button variant="outlined" onClick={handleButtonClick}>
                 <SurroundSound />
             </Button>
-        </div>
+        </Tooltip>
     );
 };
 

@@ -1,5 +1,5 @@
 import { SpatialAudio } from "@mui/icons-material";
-import { Button } from "@mui/material";
+import { Button, Tooltip } from "@mui/material";
 import React, { useState } from "react";
 import * as Tone from "tone";
 // Create a Pitch Shift effect
@@ -20,11 +20,11 @@ const PitchShiftEffect = ({ player }) => {
     };
 
     return (
-        <div>
+        <Tooltip title="Pitch Shift" placement="top">
             <Button variant="outlined" onClick={handleButtonClick}>
                 <SpatialAudio />
             </Button>
-        </div>
+        </Tooltip>
     );
 };
 

@@ -25,10 +25,8 @@ export default function Reverb({ player }) {
     };
 
     return (
-        <div>
-            <Button variant="outlined" onClick={handleButtonClick}>
-                <SlowMotionVideo />
-            </Button>
-        </div>
+        <Button variant="outlined" onClick={handleButtonClick}>
+            <SlowMotionVideo />
+        </Button>
     );
 }
