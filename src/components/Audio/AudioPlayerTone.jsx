@@ -163,8 +163,6 @@ export default function AudioPlayerTone() {
                                 style={{ transitionDuration: 600 }}
                             >
                                 <div className="filter-btns-container">
-                                    {/* <Button onClick={handlePlay}>Play</Button>
-                                <Button onClick={handlePause}>Pause</Button> */}
                                     <Tooltip title="Stop" placement="top">
                                         <Button
                                             variant="outlined"
